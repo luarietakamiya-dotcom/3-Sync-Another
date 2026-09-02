@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>劇場版3-Sync -Another Stories- 公式サイト</title>
+  <meta name="description" content="2026年10月10日公開。劇場版3-Sync -Another Stories- 公式HP。3-Sync公式楽曲約15曲とゲストアーティスト20組による大型AI音楽劇場型イベント。" />
+  <meta property="og:title" content="劇場版3-Sync -Another Stories-" />
+  <meta property="og:description" content="本編では語られなかった、もうひとつの物語が鳴り出す。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #04040d;
+      --bg-2: #09091a;
+      --text: #f7f7ff;
+      --muted: #b7b8d8;
+      --dim: #77799f;
+      --main: #7b5cff;
+      --sub: #00d9ff;
+      --accent: #ff4fd8;
+      --gold: #ffe6a7;
+      --line: rgba(255, 255, 255, 0.14);
+      --glass: rgba(255, 255, 255, 0.065);
+      --shadow: 0 0 38px rgba(123, 92, 255, 0.32);
+      --max: 1180px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Yu Gothic", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif;
+      letter-spacing: 0.035em;
+      line-height: 1.75;
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(123, 92, 255, 0.26), transparent 30%),
+        radial-gradient(circle at 86% 18%, rgba(0, 217, 255, 0.20), transparent 26%),
+        radial-gradient(circle at 60% 68%, rgba(255, 79, 216, 0.13), transparent 30%),
+        linear-gradient(180deg, #03030a 0%, #080816 45%, #03030a 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.88), transparent 82%);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      opacity: 0.32;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0px,
+          transparent 4px,
+          rgba(255,255,255,0.035) 5px,
+          transparent 7px
+        );
+      mix-blend-mode: screen;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.07;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.62'/%3E%3C/svg%3E");
+    }
+
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.95;
+      mix-blend-mode: screen;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+    }
+
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(4,4,13,0.88), rgba(4,4,13,0.38));
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      white-space: nowrap;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      position: relative;
+      background:
+        radial-gradient(circle at 35% 30%, #fff 0 4%, transparent 5%),
+        conic-gradient(from 120deg, var(--sub), var(--main), var(--accent), var(--sub));
+      box-shadow: 0 0 20px rgba(0,217,255,0.45), inset 0 0 14px rgba(255,255,255,0.24);
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: inherit;
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 8px 0;
+      transition: color 180ms ease;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 3px;
+      width: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--sub), var(--accent));
+      transition: width 180ms ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-radius: 12px;
+      font-size: 18px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 120px 18px 72px;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: min(78vw, 920px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,0.08), transparent 15%),
+        radial-gradient(circle, rgba(123,92,255,0.20), transparent 56%);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 0 80px rgba(0,217,255,0.06), 0 0 180px rgba(123,92,255,0.22);
+      animation: floatCircle 12s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    .hero::after {
+      content: "THEATER EVENT / AI MUSIC / ANOTHER STORIES";
+      position: absolute;
+      bottom: 20%;
+      left: -5vw;
+      width: 110vw;
+      font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+      font-size: clamp(58px, 11vw, 172px);
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.035);
+      white-space: nowrap;
+      transform: rotate(-5deg);
+      pointer-events: none;
+    }
+
+    @keyframes floatCircle {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -18px, 0) scale(1.02); }
+    }
+
+    .hero-inner {
+      width: min(var(--max), 100%);
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 42px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before,
+    .eyebrow::after {
+      content: "";
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .eyebrow::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+
+    .title-wrap {
+      position: relative;
+    }
+
+    .hero-title {
+      font-size: clamp(42px, 7vw, 96px);
+      line-height: 0.98;
+      letter-spacing: 0.01em;
+      font-weight: 950;
+      text-shadow: 0 0 34px rgba(123,92,255,0.36);
+    }
+
+    .hero-title .sub-title {
+      display: block;
+      margin-top: 12px;
+      font-size: clamp(26px, 4vw, 54px);
+      font-family: Georgia, "Times New Roman", serif;
+      font-style: italic;
+      font-weight: 700;
+      color: transparent;
+      background: linear-gradient(90deg, #fff, var(--sub), var(--accent), #fff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      filter: drop-shadow(0 0 12px rgba(0,217,255,0.25));
+    }
+
+    .date-line {
+      margin-top: 28px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      font-size: clamp(18px, 2.2vw, 30px);
+      font-weight: 900;
+      letter-spacing: 0.16em;
+    }
+
+    .date-line span {
+      padding: 4px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.055);
+      box-shadow: 0 0 20px rgba(0,217,255,0.10);
+    }
+
+    .hero-copy {
+      max-width: 640px;
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.6vw, 19px);
+    }
+
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.11em;
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .button.primary {
+      background: linear-gradient(90deg, rgba(123,92,255,0.95), rgba(255,79,216,0.88));
+      box-shadow: var(--shadow);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.42);
+    }
+
+    .visual-card {
+      position: relative;
+      aspect-ratio: 0.78;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background:
+        linear-gradient(150deg, rgba(255,255,255,0.14), transparent 28%),
+        radial-gradient(circle at 50% 26%, rgba(0,217,255,0.24), transparent 24%),
+        radial-gradient(circle at 42% 62%, rgba(255,79,216,0.24), transparent 28%),
+        linear-gradient(180deg, rgba(123,92,255,0.18), rgba(255,255,255,0.04));
+      box-shadow: 0 32px 80px rgba(0,0,0,0.38), inset 0 0 40px rgba(255,255,255,0.07);
+      overflow: hidden;
+    }
+
+    .visual-card::before {
+      content: "";
+      position: absolute;
+      inset: 7%;
+      border-radius: 50% 50% 42% 42%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.18), transparent 13%),
+        linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.08) 100%);
+      clip-path: polygon(50% 0%, 64% 26%, 95% 34%, 69% 52%, 79% 88%, 50% 66%, 21% 88%, 31% 52%, 5% 34%, 36% 26%);
+      filter: drop-shadow(0 0 26px rgba(0,217,255,0.24));
+    }
+
+    .visual-card::after {
+      content: "MAIN VISUAL PLACEHOLDER";
+      position: absolute;
+      left: 24px;
+      bottom: 22px;
+      color: rgba(255,255,255,0.62);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      font-weight: 900;
+    }
+
+    .character-silhouettes {
+      position: absolute;
+      inset: auto 10% 10% 10%;
+      height: 48%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4%;
+      opacity: 0.84;
+    }
+
+    .silhouette {
+      width: 27%;
+      height: var(--h);
+      border-radius: 999px 999px 20px 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.34), rgba(123,92,255,0.10) 44%, rgba(0,0,0,0.36));
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 0 30px rgba(0,217,255,0.10);
+      filter: blur(0.1px);
+    }
+
+    .silhouette:nth-child(1) { --h: 70%; transform: rotate(-4deg); }
+    .silhouette:nth-child(2) { --h: 88%; }
+    .silhouette:nth-child(3) { --h: 76%; transform: rotate(4deg); }
+
+    section {
+      position: relative;
+      padding: 100px 18px;
+    }
+
+    .container {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 42px;
+    }
+
+    .section-head > div {
+      min-width: 0;
+    }
+
+    .section-kicker {
+      display: block;
+      color: var(--sub);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      font-weight: 900;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4.6vw, 70px);
+      line-height: 1;
+      font-weight: 950;
+      letter-spacing: 0.03em;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      font-size: 15px;
+      max-width: 720px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      background: linear-gradient(145deg, rgba(255,255,255,0.09), rgba(255,255,255,0.035));
+      border-radius: 26px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.25);
+      backdrop-filter: blur(18px);
+    }
+
+    .news-list {
+      overflow: hidden;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 24px;
+      padding: 22px 26px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+    }
+
+    .news-item:last-child {
+      border-bottom: none;
+    }
+
+    .news-date {
+      color: var(--gold);
+      font-weight: 900;
+      letter-spacing: 0.10em;
+    }
+
+    .news-text {
+      color: var(--muted);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro-copy {
+      padding: 34px;
+    }
+
+    .intro-copy p + p {
+      margin-top: 18px;
+    }
+
+    .tag-wall {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 28px;
+    }
+
+    .tag-wall::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(0,217,255,0.20), transparent 21%),
+        conic-gradient(from 180deg, transparent, rgba(123,92,255,0.28), transparent, rgba(255,79,216,0.20), transparent);
+      animation: slowSpin 18s linear infinite;
+    }
+
+    @keyframes slowSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    .tag-cloud {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .tag {
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 999px;
+      background: rgba(4,4,13,0.58);
+      color: rgba(255,255,255,0.82);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .story {
+      background: linear-gradient(180deg, transparent, rgba(123,92,255,0.05), transparent);
+    }
+
+    .story-card {
+      position: relative;
+      padding: clamp(30px, 5vw, 62px);
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: "新御霊市";
+      position: absolute;
+      right: -16px;
+      bottom: -36px;
+      font-size: clamp(76px, 13vw, 190px);
+      font-weight: 950;
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.035);
+      white-space: nowrap;
+    }
+
+    .story-card p {
+      position: relative;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.6vw, 18px);
+    }
+
+    .story-card p + p {
+      margin-top: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .stat {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      min-height: 210px;
+    }
+
+    .stat::after {
+      content: "";
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      right: -70px;
+      top: -70px;
+      background: radial-gradient(circle, rgba(0,217,255,0.20), transparent 65%);
+    }
+
+    .stat-number {
+      display: block;
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: 1;
+      font-weight: 950;
+      color: transparent;
+      background: linear-gradient(120deg, #fff, var(--sub), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .stat-label {
+      display: block;
+      margin-top: 14px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .stat-text {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .track-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .track {
+      min-height: 86px;
+      padding: 13px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.045);
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .track strong {
+      display: block;
+      color: var(--text);
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    .guest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .guest-card {
+      position: relative;
+      overflow: hidden;
+      padding: 20px;
+      min-height: 176px;
+      transition: transform 190ms ease, border-color 190ms ease, background 190ms ease;
+    }
+
+    .guest-card::before {
+      content: attr(data-no);
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 950;
+      color: rgba(255,255,255,0.055);
+    }
+
+    .guest-card::after {
+      content: "";
+      position: absolute;
+      left: -30%;
+      top: 0;
+      width: 34%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      transform: skewX(-18deg);
+      transition: left 380ms ease;
+    }
+
+    .guest-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0,217,255,0.38);
+      background: linear-gradient(145deg, rgba(123,92,255,0.14), rgba(255,255,255,0.045));
+    }
+
+    .guest-card:hover::after {
+      left: 120%;
+    }
+
+    .guest-role {
+      display: inline-flex;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--sub);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      margin-bottom: 14px;
+    }
+
+    .guest-avatar {
+      position: relative;
+      width: 104px;
+      aspect-ratio: 1;
+      margin: 2px 0 18px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: linear-gradient(145deg, rgba(0,217,255,0.16), rgba(123,92,255,0.16), rgba(255,79,216,0.14));
+      box-shadow: 0 0 24px rgba(0,217,255,0.12);
+    }
+
+    .guest-avatar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 18px rgba(0,0,0,0.28);
+      pointer-events: none;
+    }
+
+    .guest-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .guest-avatar--pending {
+      display: grid;
+      place-items: center;
+    }
+
+    .guest-avatar--pending span {
+      color: rgba(255,255,255,0.48);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-align: center;
+    }
+
+    .guest-name {
+      position: relative;
+      font-size: 18px;
+      line-height: 1.35;
+      font-weight: 900;
+      padding-right: 34px;
+    }
+
+    .guest-track {
+      position: relative;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .guest-track span {
+      color: var(--gold);
+      font-weight: 900;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .character-card {
+      position: relative;
+      min-height: 360px;
+      padding: 28px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .character-card::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 32px;
+      width: 42%;
+      height: 52%;
+      transform: translateX(-50%);
+      border-radius: 999px 999px 28px 28px;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255,255,255,0.30), transparent 18%),
+        linear-gradient(180deg, rgba(255,255,255,0.25), rgba(123,92,255,0.10), rgba(0,0,0,0.20));
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 0 36px rgba(0,217,255,0.12);
+    }
+
+    .character-card::after {
+      content: attr(data-bg);
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      font-size: clamp(56px, 8vw, 108px);
+      line-height: 0.9;
+      font-weight: 950;
+      color: rgba(255,255,255,0.045);
+    }
+
+    .character-card h3,
+    .character-card p {
+      position: relative;
+    }
+
+    .character-card h3 {
+      font-size: 30px;
+      letter-spacing: 0.16em;
+    }
+
+    .character-card p {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .schedule-line {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .schedule-item {
+      padding: 22px;
+      min-height: 156px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .schedule-item::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 0;
+      width: 1px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--sub), transparent);
+      opacity: 0.5;
+    }
+
+    .schedule-item h3,
+    .schedule-item p,
+    .schedule-item time {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .schedule-item time {
+      display: block;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      margin-bottom: 12px;
+    }
+
+    .schedule-item h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .schedule-item p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .credit-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 18px;
+    }
+
+    .credit-logo {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 28px;
+    }
+
+    .credit-logo strong {
+      display: block;
+      font-size: clamp(28px, 4vw, 50px);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .credit-logo span {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+    }
+
+    .credit-list {
+      padding: 26px;
+    }
+
+    .credit-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 18px;
+      padding: 13px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .credit-row:last-child {
+      border-bottom: none;
+    }
+
+    .credit-row dt {
+      color: var(--sub);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .credit-row dd {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer {
+      padding: 42px 18px 56px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0,0,0,0.18);
+      text-align: center;
+      color: var(--dim);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 700ms ease, transform 700ms ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .glitch::before {
+      color: var(--sub);
+      transform: translateX(-2px);
+      clip-path: inset(0 0 58% 0);
+    }
+
+    .glitch::after {
+      color: var(--accent);
+      transform: translateX(2px);
+      clip-path: inset(54% 0 0 0);
+    }
+
+    .glitch:hover::before,
+    .glitch:hover::after {
+      opacity: 0.72;
+      animation: glitchJitter 520ms steps(2, end) infinite;
+    }
+
+    @keyframes glitchJitter {
+      0% { transform: translate(0,0); }
+      25% { transform: translate(-2px,1px); }
+      50% { transform: translate(2px,-1px); }
+      75% { transform: translate(-1px,2px); }
+      100% { transform: translate(0,0); }
+    }
+
+
+
+    /* Integrated key visuals */
+    .hero-inner {
+      grid-template-columns: 0.82fr 1.18fr;
+    }
+
+    .visual-card {
+      aspect-ratio: 3 / 2;
+      border-radius: 26px;
+      padding: 8px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), transparent 30%),
+        radial-gradient(circle at 18% 14%, rgba(0,217,255,0.22), transparent 28%),
+        radial-gradient(circle at 84% 18%, rgba(255,79,216,0.24), transparent 30%),
+        rgba(255,255,255,0.05);
+      box-shadow: 0 34px 90px rgba(0,0,0,0.46), 0 0 70px rgba(123,92,255,0.22), inset 0 0 32px rgba(255,255,255,0.08);
+    }
+
+    .visual-card::before,
+    .visual-card::after,
+    .character-silhouettes {
+      display: none;
+    }
+
+    .visual-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+
+    .visual-badge {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      z-index: 3;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(4,4,13,0.64);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,0.86);
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      font-weight: 900;
+    }
+
+    .character-visual-grid {
+      align-items: stretch;
+    }
+
+    .character-visual-grid .character-card {
+      min-height: 560px;
+      padding: 0;
+      border-radius: 28px;
+      background: rgba(4,4,13,0.72);
+      isolation: isolate;
+      transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+    }
+
+    .character-visual-grid .character-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255,255,255,0.32);
+      box-shadow: 0 28px 88px rgba(0,0,0,0.34), 0 0 42px rgba(0,217,255,0.12);
+    }
+
+    .character-visual-grid .character-card::before {
+      display: none;
+    }
+
+    .character-visual-grid .character-card::after {
+      z-index: 2;
+      top: 20px;
+      left: 20px;
+      color: rgba(255,255,255,0.062);
+      text-shadow: 0 0 28px rgba(255,255,255,0.08);
+      pointer-events: none;
+    }
+
+    .character-portrait {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transform: scale(1.01);
+      transition: transform 360ms ease, filter 360ms ease;
+    }
+
+    .character-card:hover .character-portrait {
+      transform: scale(1.045);
+      filter: contrast(1.04) saturate(1.08);
+    }
+
+    .character-info {
+      position: relative;
+      z-index: 4;
+      margin-top: auto;
+      padding: 150px 24px 24px;
+      background:
+        linear-gradient(180deg, transparent, rgba(4,4,13,0.76) 42%, rgba(4,4,13,0.94) 100%);
+    }
+
+    .character-role {
+      display: inline-flex;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-size: 10px;
+      line-height: 1.4;
+      letter-spacing: 0.14em;
+      font-weight: 900;
+    }
+
+    .character-info h3 {
+      font-size: clamp(26px, 3.6vw, 40px);
+      line-height: 1.05;
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 24px rgba(0,0,0,0.58);
+    }
+
+    .character-info h3 small {
+      font-size: 0.42em;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      margin-left: 8px;
+    }
+
+    .character-info p {
+      max-width: 94%;
+      color: rgba(247,247,255,0.78);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .character-card--mimi .character-role { color: #74eaff; }
+    .character-card--lua .character-role { color: #ffe6a7; }
+    .character-card--achan .character-role { color: #ff8ee6; }
+
+    @media (max-width: 1320px) {
+      .section-head {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 16px;
+      }
+
+      .section-lead {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-card {
+        max-width: 780px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .character-visual-grid .character-card {
+        min-height: 620px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .visual-card {
+        border-radius: 20px;
+        padding: 6px;
+      }
+
+      .visual-card img {
+        border-radius: 15px;
+      }
+
+      .visual-badge {
+        left: 14px;
+        bottom: 14px;
+        font-size: 9px;
+      }
+
+      .character-visual-grid .character-card {
+        min-height: 560px;
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .section-head,
+      .intro-grid,
+      .credit-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-card {
+        max-width: 420px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .stats-grid,
+      .guest-grid,
+      .character-grid,
+      .schedule-line {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .track-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .nav {
+        height: 62px;
+      }
+
+      .menu-button {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        top: 70px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(5,5,16,0.95);
+      }
+
+      .nav-links.is-open {
+        display: flex;
+      }
+
+      .hero {
+        padding-top: 100px;
+      }
+
+      section {
+        padding: 76px 16px;
+      }
+
+      .stats-grid,
+      .guest-grid,
+      .character-grid,
+      .schedule-line,
+      .track-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .news-item,
+      .credit-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .button {
+        width: 100%;
+      }
+    }
+
+
+    /* Final responsive overrides for integrated visuals */
+    @media (max-width: 980px) {
+      .visual-card { max-width: 780px; width: 100%; }
+      .character-visual-grid .character-card { min-height: 620px; }
+    }
+
+    @media (max-width: 760px) {
+      .visual-card { max-width: 100%; border-radius: 20px; padding: 6px; }
+      .visual-card img { border-radius: 15px; }
+      .visual-badge { left: 14px; bottom: 14px; font-size: 9px; }
+      .character-visual-grid .character-card { min-height: 560px; }
+    }
+
+  
+
+    /* ===== CINEMATIC REDESIGN 2026-07 ===== */
+    :root { --panel-radius: 15px; }
+    .panel { border-radius: var(--panel-radius); }
+
+    .hero { min-height: 100svh; padding-top: 92px; }
+    .hero-inner { width: min(1360px, 100%); grid-template-columns: minmax(320px,.68fr) minmax(640px,1.32fr); gap: clamp(28px,5vw,72px); align-items: center; }
+    .hero-title { font-size: clamp(48px,6.6vw,104px); }
+    .hero-copy--cinematic { font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(19px,1.7vw,27px); line-height: 1.75; letter-spacing: .08em; color: rgba(255,255,255,.92); margin-top: 26px; }
+    .hero-meta-line { display:flex; align-items:center; gap:14px; margin-top:24px; color:rgba(255,255,255,.62); font-size:11px; letter-spacing:.18em; font-weight:800; }
+    .hero-meta-line i { width:44px; height:1px; background:linear-gradient(90deg,var(--sub),var(--accent)); }
+    .visual-card { max-width:none; border-radius:14px; padding:7px; transform:none; overflow:hidden; background:linear-gradient(145deg, rgba(7,12,36,.92), rgba(20,14,46,.88)); }
+    .visual-card img { display:block; width:100%; aspect-ratio:16 / 9; min-height:0; border-radius:9px; object-fit:contain; object-position:center center; background:linear-gradient(145deg, rgba(3,8,28,.96), rgba(16,12,42,.96)); }
+    .visual-card::before { border-radius:14px; }
+
+    #intro .panel { border-radius:16px; }
+    #story .story-card { border-radius:4px 24px 4px 24px; border-left:2px solid rgba(255,230,167,.65); background:linear-gradient(90deg,rgba(255,230,167,.055),rgba(255,255,255,.025)); }
+
+    .music-cinematic { overflow:hidden; background:radial-gradient(circle at 50% 30%,rgba(123,92,255,.18),transparent 45%); }
+    .music-cinematic::before { content:"MUSIC"; position:absolute; inset:auto 0 2%; font-size:min(25vw,360px); font-weight:950; letter-spacing:.08em; color:rgba(255,255,255,.018); white-space:nowrap; pointer-events:none; }
+    .music-monument { position:relative; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:clamp(24px,4vw,60px); min-height:520px; padding:50px 0 110px; }
+    .music-figure { display:grid; grid-template-columns:auto 1fr; align-items:center; gap:24px; position:relative; z-index:1; }
+    .music-number { font-size:clamp(110px,14vw,230px); line-height:.75; font-weight:950; letter-spacing:-.08em; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.8); text-shadow:0 0 45px rgba(123,92,255,.45); }
+    .music-figure--sync .music-number { background:linear-gradient(180deg,#fff 8%,#73eaff 88%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .music-figure--guest .music-number { background:linear-gradient(180deg,#fff 8%,#ff6ddb 88%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .music-figure b { display:block; font-size:clamp(25px,3vw,46px); letter-spacing:.08em; }
+    .music-figure small { display:block; color:var(--muted); letter-spacing:.16em; font-size:11px; margin:8px 0 18px; }
+    .music-figure p { color:var(--muted); max-width:260px; }
+    .music-cross { font-family:serif; font-size:clamp(42px,5vw,72px); color:rgba(255,255,255,.28); }
+    .music-total { position:absolute; left:50%; bottom:12px; transform:translateX(-50%); text-align:center; }
+    .music-total span { display:block; font-size:clamp(66px,8vw,124px); line-height:.8; font-weight:950; background:linear-gradient(90deg,var(--sub),#fff,var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .music-total sup { font-size:.35em; }
+    .music-total small { display:block; margin-top:14px; letter-spacing:.28em; color:var(--gold); }
+    .track-strip { display:flex; overflow:hidden; gap:30px; padding:19px 0; border-top:1px solid rgba(255,255,255,.14); border-bottom:1px solid rgba(255,255,255,.14); color:rgba(255,255,255,.28); white-space:nowrap; mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent); }
+    .track-strip span { font-size:11px; letter-spacing:.2em; }
+
+    .guest-card { border-radius:12px; position:relative; overflow:hidden; }
+    .guest-card::after { content:""; position:absolute; inset:auto 0 0; height:2px; background:linear-gradient(90deg,var(--sub),var(--main),var(--accent)); opacity:.45; transform:scaleX(.2); transform-origin:left; transition:.35s; }
+    .guest-card:hover::after { transform:scaleX(1); opacity:1; }
+
+    .character-cinematic { padding-left:0; padding-right:0; overflow:hidden; }
+    .character-cinematic > .container { padding:0 18px; }
+    .character-feature { position:relative; min-height:760px; display:grid; place-items:center; border-top:1px solid rgba(255,255,255,.08); overflow:hidden; }
+    .character-feature::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 20% 50%,var(--char-glow),transparent 44%),linear-gradient(90deg,rgba(4,4,13,.15),rgba(4,4,13,.92)); }
+    .character-feature--mimi { --char:#54dcff; --char-glow:rgba(0,217,255,.23); }
+    .character-feature--lua { --char:#ffe0a0; --char-glow:rgba(255,202,95,.22); }
+    .character-feature--achan { --char:#ff65d5; --char-glow:rgba(255,79,216,.22); }
+    .character-feature-inner { position:relative; z-index:1; width:min(1320px,calc(100% - 36px)); margin:auto; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr); align-items:center; gap:clamp(36px,6vw,90px); }
+    .character-feature-inner.reverse .character-feature-image { order:2; }
+    .character-feature-inner.reverse .character-feature-copy { order:1; }
+    .character-feature-image { height:640px; position:relative; }
+    .character-feature-image::after { content:""; position:absolute; inset:0; box-shadow:inset 0 0 70px 30px rgba(4,4,13,.7); pointer-events:none; }
+    .character-feature-image img { width:100%; height:100%; object-fit:cover; object-position:center top; border-radius:2px 18px 2px 18px; filter:saturate(1.05) contrast(1.03); }
+    .character-feature-copy { max-width:520px; }
+    .character-index { display:block; color:var(--char); font-size:11px; letter-spacing:.24em; font-weight:900; margin-bottom:22px; }
+    .character-feature-copy h3 { line-height:.9; margin-bottom:22px; }
+    .character-feature-copy h3 em { display:block; font-style:normal; font-size:clamp(56px,7vw,110px); letter-spacing:-.04em; color:#fff; text-shadow:0 0 35px var(--char-glow); }
+    .character-feature-copy h3 small { display:block; margin-top:14px; color:var(--char); font-size:17px; letter-spacing:.12em; }
+    .character-roleline { color:var(--char); letter-spacing:.15em; font-size:12px; font-weight:900; margin-bottom:24px; }
+    .character-feature-copy > p:not(.character-roleline) { color:rgba(255,255,255,.76); font-size:16px; line-height:2; }
+    .character-keywords { display:flex; flex-wrap:wrap; gap:9px; margin-top:28px; }
+    .character-keywords span { border:1px solid color-mix(in srgb,var(--char) 45%,transparent); color:var(--char); padding:9px 13px; font-size:10px; letter-spacing:.14em; background:rgba(0,0,0,.22); }
+
+    #credit { background:linear-gradient(180deg,transparent,rgba(0,0,0,.4)); }
+
+    @media (max-width: 980px) {
+      .hero-inner { grid-template-columns:1fr; }
+      .visual-card img { min-height:0; aspect-ratio:auto; }
+      .music-monument { grid-template-columns:1fr; text-align:center; gap:12px; padding-bottom:140px; }
+      .music-figure { grid-template-columns:1fr; justify-items:center; }
+      .music-figure p { max-width:none; }
+      .music-cross { transform:rotate(45deg); }
+      .character-feature { min-height:auto; padding:70px 0; }
+      .character-feature-inner,.character-feature-inner.reverse { grid-template-columns:1fr; }
+      .character-feature-inner.reverse .character-feature-image,.character-feature-inner.reverse .character-feature-copy { order:initial; }
+      .character-feature-image { height:min(115vw,700px); }
+      .character-feature-copy { max-width:760px; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding-top:76px; }
+      .hero-meta-line { flex-wrap:wrap; }
+      .music-number { font-size:38vw; }
+      .character-feature-copy h3 em { font-size:17vw; }
+      .character-feature-image { height:128vw; }
+    }
+
+  
+
+    /* Official 3-Sync logo placements */
+    .brand {
+      gap: 0;
+      min-width: 148px;
+    }
+
+    .brand-logo-image {
+      display: block;
+      width: 148px;
+      height: 44px;
+      object-fit: contain;
+      object-position: left center;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 10px rgba(0,217,255,.22));
+    }
+
+    .credit-logo {
+      overflow: hidden;
+      background: radial-gradient(circle at center, rgba(58,34,110,.25), rgba(3,5,15,.88) 72%);
+    }
+
+    .credit-logo-image {
+      display: block;
+      width: min(100%, 440px);
+      margin: 0 auto 18px;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 18px rgba(123,92,255,.22));
+    }
+
+    .credit-logo-caption {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .2em;
+    }
+
+    .footer-logo-image {
+      display: block;
+      width: min(340px, 78vw);
+      margin: 0 auto 22px;
+      mix-blend-mode: screen;
+      filter: drop-shadow(0 0 16px rgba(255,79,216,.18));
+    }
+
+    @media (max-width: 760px) {
+      .brand { min-width: 112px; }
+      .brand-logo-image { width: 112px; height: 36px; }
+      .credit-logo-image { width: min(100%, 320px); }
+      .footer-logo-image { width: min(280px, 76vw); }
+    }
+
+    /* Guest story viewer */
+    body.modal-open { overflow: hidden; }
+
+    .guest-card { cursor: pointer; }
+    .guest-card:focus-visible {
+      outline: 2px solid var(--sub);
+      outline-offset: 4px;
+      border-color: rgba(0,217,255,.75);
+    }
+
+    .guest-modal[hidden] { display: none; }
+    .guest-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+    .guest-modal.is-open { opacity: 1; }
+    .guest-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(1,2,10,.88);
+      backdrop-filter: blur(12px);
+    }
+    .guest-modal-dialog {
+      position: relative;
+      width: min(1040px, 100%);
+      max-height: calc(100svh - 48px);
+      overflow: auto;
+      overscroll-behavior: contain;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(0,217,255,.12), transparent 30%),
+        radial-gradient(circle at 88% 18%, rgba(255,79,216,.12), transparent 28%),
+        rgba(5,6,18,.98);
+      box-shadow: 0 32px 120px rgba(0,0,0,.7), 0 0 45px rgba(123,92,255,.16);
+      transform: translateY(14px) scale(.985);
+      transition: transform 180ms ease;
+    }
+    .guest-modal.is-open .guest-modal-dialog { transform: translateY(0) scale(1); }
+    .guest-modal-close {
+      position: sticky;
+      z-index: 4;
+      top: 14px;
+      float: right;
+      width: 44px;
+      height: 44px;
+      margin: 14px 14px -58px 0;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(3,4,13,.78);
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+    .guest-modal-close:hover,
+    .guest-modal-close:focus-visible { border-color: var(--sub); outline: none; }
+    .guest-modal-inner { padding: clamp(22px,4vw,48px); }
+    .guest-modal-header { margin: 0 58px 24px 0; }
+    .guest-modal-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--sub);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .22em;
+    }
+    .guest-modal-title {
+      font-size: clamp(28px,4vw,52px);
+      line-height: 1.2;
+      letter-spacing: .03em;
+    }
+    .guest-modal-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 100%;
+      min-height: min(58svh, 680px);
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      background: linear-gradient(145deg, rgba(0,217,255,.06), rgba(123,92,255,.08), rgba(255,79,216,.06));
+    }
+    .guest-modal-visual img {
+      display: block;
+      width: 100%;
+      height: min(58svh, 680px);
+      object-fit: contain;
+      background: rgba(0,0,0,.28);
+    }
+    .guest-modal-visual.is-pending img { display: none; }
+    .guest-modal-image-pending {
+      display: none;
+      color: rgba(255,255,255,.46);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .18em;
+    }
+    .guest-modal-visual.is-pending .guest-modal-image-pending { display: block; }
+    .guest-modal-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .guest-modal-tab {
+      min-height: 52px;
+      padding: 12px 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px;
+      color: rgba(255,255,255,.78);
+      background: rgba(255,255,255,.045);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+    .guest-modal-tab:hover,
+    .guest-modal-tab:focus-visible {
+      color: #fff;
+      border-color: rgba(0,217,255,.6);
+      outline: none;
+    }
+    .guest-modal-tab[aria-selected="true"] {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(100deg, rgba(0,217,255,.28), rgba(123,92,255,.32), rgba(255,79,216,.24));
+      box-shadow: 0 0 24px rgba(123,92,255,.16);
+    }
+    .guest-modal-content {
+      margin-top: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      background: rgba(0,0,0,.3);
+    }
+    .guest-modal-content[hidden] { display: none; }
+    .guest-modal-empty {
+      display: grid;
+      place-items: center;
+      min-height: 240px;
+      padding: 32px;
+      color: rgba(255,255,255,.55);
+      text-align: center;
+      font-size: 14px;
+      letter-spacing: .08em;
+    }
+    .guest-modal-frame {
+      display: block;
+      width: 100%;
+      height: min(72svh, 760px);
+      border: 0;
+      background: #fff;
+    }
+    .guest-modal-frame.is-video {
+      height: auto;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+    .guest-modal-external {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      min-height: 46px;
+      padding: 10px 18px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      background: rgba(4,5,16,.96);
+    }
+    .guest-modal-external.is-visible { display: flex; }
+
+    @media (max-width: 640px) {
+      .guest-modal { padding: 0; }
+      .guest-modal-dialog { width: 100%; max-height: 100svh; border-radius: 0; border-left: 0; border-right: 0; }
+      .guest-modal-inner { padding: 20px 14px 36px; }
+      .guest-modal-header { margin-bottom: 18px; }
+      .guest-modal-visual,
+      .guest-modal-visual img { min-height: 0; height: 54svh; }
+      .guest-modal-tabs { gap: 6px; }
+      .guest-modal-tab { min-height: 48px; padding: 10px 6px; font-size: 13px; letter-spacing: .05em; }
+      .guest-modal-frame { height: 72svh; }
+    }
+
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas" aria-hidden="true"></canvas>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#top" class="brand" aria-label="劇場版3-Sync トップへ">
+        <img class="brand-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync" />
+      </a>
+      <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#news">News</a>
+        <a href="#intro">Introduction</a>
+        <a href="#story">Story</a>
+        <a href="#music">Music</a>
+        <a href="#guest">Guest</a>
+        <a href="#character">Character</a>
+        <a href="#schedule">Schedule</a>
+        <a href="#credit">Credit</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-label="Hero">
+      <div class="hero-inner">
+        <div class="hero-text reveal">
+          <div class="eyebrow">AI Music Theater Event</div>
+          <div class="title-wrap">
+            <h1 class="hero-title">
+              <span class="glitch" data-text="劇場版3-Sync">劇場版3-Sync</span>
+              <span class="sub-title">- Another Stories -</span>
+            </h1>
+          </div>
+          <div class="date-line" aria-label="公開日">
+            <span>2026.10.10</span>
+            <span>PREMIERE</span>
+          </div>
+          <p class="hero-copy hero-copy--cinematic">
+            本編では語られなかった、<br>もうひとつの物語。
+          </p>
+          <div class="hero-meta-line">
+            <span>15 OFFICIAL SONGS</span><i></i><span>20 GUEST ARTISTS</span>
+          </div>
+        </div>
+        <div class="visual-card reveal" aria-label="メインキービジュアル">
+          <img src="3sync_assets/hero_theatrical_visual.jpg" alt="劇場版3-Sync -Another Stories- HEROキービジュアル" />
+          <div class="visual-badge">HERO KEY VISUAL</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Official Information</span>
+            <h2 class="section-title">NEWS</h2>
+          </div>
+          <p class="section-lead">公開までの更新情報を掲載します。ティザー、参加アーティスト、楽曲情報は順次解禁予定です。</p>
+        </div>
+        <div class="panel news-list">
+          <article class="news-item">
+            <time class="news-date" datetime="2026-09-02">2026.09.02</time>
+            <p class="news-text">参加アーティスト20組を発表。公式サイトを更新しました。</p>
+          </article>
+          <article class="news-item">
+            <time class="news-date" datetime="2026-10-10">2026.10.10</time>
+            <p class="news-text">『劇場版3-Sync -Another Stories-』公開。</p>
+          </article>
+          <article class="news-item">
+            <time class="news-date" datetime="2026-10-01">2026.10.01</time>
+            <p class="news-text">公開カウントダウン企画開始予定。</p>
+          </article>
+          <article class="news-item">
+            <time class="news-date" datetime="2026-09-01">2026.09.01</time>
+            <p class="news-text">公開に向けた最新情報の発信を開始しました。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="intro" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">The Beginning</span>
+            <h2 class="section-title">INTRODUCTION</h2>
+          </div>
+          <p class="section-lead">3-Syncの世界に集った音楽たちが、それぞれの視点で“Another Story”を鳴らす。</p>
+        </div>
+        <div class="intro-grid">
+          <div class="panel intro-copy">
+            <p>2026年10月10日、3-Syncの新たな物語が幕を開ける。</p>
+            <p>『劇場版3-Sync -Another Stories-』は、3-Sync公式楽曲と、20組のゲストアーティストによる参加楽曲で構成される大型AI音楽劇場型イベント。</p>
+            <p>本編では描かれなかった視点。語られることのなかった感情。別々の場所で鳴っていた音が、ひとつの劇場へ集まっていく。</p>
+            <p>これは、もうひとつの3-Sync。そして、あなたの音が物語になる日。</p>
+          </div>
+          <div class="panel tag-wall" aria-label="キーワード">
+            <div class="tag-cloud">
+              <span class="tag">YODEL PARTICLE</span>
+              <span class="tag">NOISE</span>
+              <span class="tag">SHIN-MITAMA CITY</span>
+              <span class="tag">ANOTHER STORIES</span>
+              <span class="tag">AI MUSIC</span>
+              <span class="tag">GUEST ARTISTS</span>
+              <span class="tag">THEATER EVENT</span>
+              <span class="tag">3-SYNC</span>
+              <span class="tag">SOUND × STORY</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="story reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">World Setting</span>
+            <h2 class="section-title">STORY</h2>
+          </div>
+          <p class="section-lead">科学技術と呪術、感情と音楽が交差する都市。そこから生まれる、もうひとつの物語。</p>
+        </div>
+        <div class="panel story-card">
+          <p>科学技術と呪術が融合した巨大都市「新御霊市」。</p>
+          <p>上層には光に満ちた清潔な街が広がり、下層には酸性雨、ホログラム広告、違法建築が入り乱れる。</p>
+          <p>世界に満ちるヨーデル粒子。人々の感情から生まれる怪異、ノイズ。</p>
+          <p>歌はただの音楽ではない。調律であり、祈りであり、戦うための力でもある。</p>
+          <p>3-Syncの物語は、ひとつでは終わらない。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="music" class="reveal music-cinematic">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">35 Stories, One Theater</span>
+            <h2 class="section-title">MUSIC</h2>
+          </div>
+          <p class="section-lead">3-Syncの公式楽曲と、20組のゲストが持ち寄る20の物語。すべての音が、ひとつの劇場へ集う。</p>
+        </div>
+        <div class="music-monument" aria-label="楽曲構成">
+          <article class="music-figure music-figure--sync">
+            <span class="music-number">15</span>
+            <div><b>3-Sync</b><small>OFFICIAL SONGS</small><p>物語の核となる公式楽曲群。</p></div>
+          </article>
+          <div class="music-cross">×</div>
+          <article class="music-figure music-figure--guest">
+            <span class="music-number">20</span>
+            <div><b>GUEST</b><small>ARTISTS / STORIES</small><p>20組が描く、それぞれのAnother Story。</p></div>
+          </article>
+          <div class="music-total"><span>35<sup>+</sup></span><small>TOTAL STORIES</small></div>
+        </div>
+        <div class="track-strip" aria-label="3-Sync楽曲一覧 仮枠">
+          <span>TRACK 01</span><span>TRACK 02</span><span>TRACK 03</span><span>TRACK 04</span><span>TRACK 05</span>
+          <span>TRACK 06</span><span>TRACK 07</span><span>TRACK 08</span><span>TRACK 09</span><span>TRACK 10</span>
+          <span>TRACK 11</span><span>TRACK 12</span><span>TRACK 13</span><span>TRACK 14</span><span>TRACK 15</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="guest" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">20 Artists / 20 Stories</span>
+            <h2 class="section-title">GUEST ARTISTS</h2>
+          </div>
+          <p class="section-lead">20組のアーティストが、それぞれの音楽で“Another Story”を描く。</p>
+        </div>
+        <div class="guest-grid">
+          <article class="panel guest-card" data-no="01"><span class="guest-role">GUEST 01</span><div class="guest-avatar"><img src="3sync_assets/guest_catbeat.png" alt="CatBeat / GABu アイコン"></div><h3 class="guest-name">CatBeat / GABu</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="02"><span class="guest-role">GUEST 02</span><div class="guest-avatar"><img src="3sync_assets/guest_daiten.png" alt="Daiten アイコン"></div><h3 class="guest-name">Daiten</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="03"><span class="guest-role">GUEST 03</span><div class="guest-avatar"><img src="3sync_assets/guest_katsunn.jpeg" alt="Katsunn アイコン"></div><h3 class="guest-name">Katsunn</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="04"><span class="guest-role">GUEST 04</span><div class="guest-avatar guest-avatar--pending" aria-label="アイコン準備中"><span>COMING<br>SOON</span></div><h3 class="guest-name">Makotang</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="05"><span class="guest-role">GUEST 05</span><div class="guest-avatar"><img src="3sync_assets/guest_makotoai.png" alt="MakotoAI アイコン"></div><h3 class="guest-name">MakotoAI</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="06"><span class="guest-role">GUEST 06</span><div class="guest-avatar"><img src="3sync_assets/guest_mogu.png" alt="MOGU アイコン"></div><h3 class="guest-name">MOGU</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="07"><span class="guest-role">GUEST 07</span><div class="guest-avatar"><img src="3sync_assets/guest_nue.jpg" alt="nue~鵺~ アイコン"></div><h3 class="guest-name">nue~鵺~</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="08"><span class="guest-role">GUEST 08</span><div class="guest-avatar"><img src="3sync_assets/guest_varts.png" alt="rui｜∫varts アイコン"></div><h3 class="guest-name">rui｜∫varts</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="09"><span class="guest-role">GUEST 09</span><div class="guest-avatar"><img src="3sync_assets/guest_ruke.jpeg" alt="Ruke アイコン"></div><h3 class="guest-name">Ruke</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="10"><span class="guest-role">GUEST 10</span><div class="guest-avatar"><img src="3sync_assets/guest_to.png" alt="To アイコン"></div><h3 class="guest-name">To</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="11"><span class="guest-role">GUEST 11</span><div class="guest-avatar"><img src="3sync_assets/guest_uta.jpeg" alt="Uta-Journey アイコン"></div><h3 class="guest-name">Uta-Journey</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="12"><span class="guest-role">GUEST 12</span><div class="guest-avatar"><img src="3sync_assets/guest_new_world.png" alt="新しい世界 アイコン"></div><h3 class="guest-name">新しい世界</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="13"><span class="guest-role">GUEST 13</span><div class="guest-avatar"><img src="3sync_assets/guest_aki.png" alt="アキ アイコン"></div><h3 class="guest-name">アキ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="14"><span class="guest-role">GUEST 14</span><div class="guest-avatar"><img src="3sync_assets/guest_gin.jpg" alt="銀-GIN- アイコン"></div><h3 class="guest-name">銀-GIN-</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="15"><span class="guest-role">GUEST 15</span><div class="guest-avatar guest-avatar--pending" aria-label="アイコン準備中"><span>COMING<br>SOON</span></div><h3 class="guest-name">深海魚</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="16"><span class="guest-role">GUEST 16</span><div class="guest-avatar"><img src="3sync_assets/guest_blanchesca.png" alt="ブランシェスカ アイコン"></div><h3 class="guest-name">ブランシェスカ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="17"><span class="guest-role">GUEST 17</span><div class="guest-avatar"><img src="3sync_assets/guest_maeno.png" alt="前野凌 アイコン"></div><h3 class="guest-name">前野凌</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="18"><span class="guest-role">GUEST 18</span><div class="guest-avatar"><img src="3sync_assets/guest_soiya.png" alt="南黒山ソイヤ アイコン"></div><h3 class="guest-name">南黒山ソイヤ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="19"><span class="guest-role">GUEST 19</span><div class="guest-avatar"><img src="3sync_assets/guest_memuroiro.png" alt="メムロイロ アイコン"></div><h3 class="guest-name">メムロイロ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="20"><span class="guest-role">GUEST 20</span><div class="guest-avatar"><img src="3sync_assets/guest_diva.jpg" alt="Resonance Diva アイコン"></div><h3 class="guest-name">Resonance Diva</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="character" class="reveal character-cinematic">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">3-Sync Side</span>
+            <h2 class="section-title">CHARACTER</h2>
+          </div>
+          <p class="section-lead">三つの音、三つの役割。互いを同期し、ひとつの物語を鳴らす3-Sync。</p>
+        </div>
+      </div>
+      <article class="character-feature character-feature--mimi">
+        <div class="character-feature-inner">
+          <div class="character-feature-image"><img src="3sync_assets/character_mimi_visual.jpg" alt="MIMI キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-copy">
+            <span class="character-index">01 / OBSERVER</span>
+            <h3><em>MIMI</em><small>夜凪ミミ</small></h3>
+            <p class="character-roleline">OBSERVER / FRONTLINE ACE</p>
+            <p>青白きコアで戦況を観測し、圧倒的な精度で戦場を駆ける。静かな視線の奥で、誰より早く異変を捉える3-Syncの前衛。</p>
+            <div class="character-keywords"><span>OBSERVE</span><span>BLUE CORE</span><span>FRONTLINE</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="character-feature character-feature--lua">
+        <div class="character-feature-inner reverse">
+          <div class="character-feature-image"><img src="3sync_assets/character_lua_visual.jpg" alt="ルアリエ キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-copy">
+            <span class="character-index">02 / HARMONIZER</span>
+            <h3><em>ルアリエ</em><small>LUA</small></h3>
+            <p class="character-roleline">HARMONIZER / MAIN VOCAL</p>
+            <p>ヨーデル粒子を調律し、歌で未来を拓く。3-Syncの中心にして、すべての音が帰ってくる場所。</p>
+            <div class="character-keywords"><span>HARMONIZE</span><span>YODEL PARTICLE</span><span>MAIN VOCAL</span></div>
+          </div>
+        </div>
+      </article>
+      <article class="character-feature character-feature--achan">
+        <div class="character-feature-inner">
+          <div class="character-feature-image"><img src="3sync_assets/character_achan_visual.jpg" alt="えーちゃん キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-copy">
+            <span class="character-index">03 / SYNC-OPERATOR</span>
+            <h3><em>えーちゃん</em><small>A-CHAN</small></h3>
+            <p class="character-roleline">SYNC-OPERATOR / SUPPORT CASTER</p>
+            <p>音と呪術で心を繋ぎ、乱れた戦場を整える。ピンクのノイズは、仲間を守る盾であり、敵を縛る武器。</p>
+            <div class="character-keywords"><span>SYNC</span><span>SUPPORT</span><span>PINK NOISE</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="schedule" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Release Roadmap</span>
+            <h2 class="section-title">SCHEDULE</h2>
+          </div>
+          <p class="section-lead">物語が幕を開けるその日まで、最新情報を順次お届けします。</p>
+        </div>
+        <div class="schedule-line">
+          <article class="panel schedule-item"><time>COMING SOON</time><h3>Teaser</h3><p>キービジュアル、告知映像などを公開予定。</p></article>
+          <article class="panel schedule-item"><time>COMING SOON</time><h3>Guest Reveal</h3><p>ゲストアーティスト情報を順次解禁。</p></article>
+          <article class="panel schedule-item"><time>2026.10.01</time><h3>Countdown</h3><p>公開直前カウントダウン企画を開始予定。</p></article>
+          <article class="panel schedule-item"><time>2026.10.10</time><h3>Premiere</h3><p>劇場版3-Sync -Another Stories- 公開。</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="credit" class="reveal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Production Note</span>
+            <h2 class="section-title">CREDIT</h2>
+          </div>
+          <p class="section-lead">企画を支える制作チームと参加アーティスト。</p>
+        </div>
+        <div class="credit-grid">
+          <div class="panel credit-logo">
+            <div>
+              <img class="credit-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync ロゴ" />
+              <span class="credit-logo-caption">ANOTHER STORIES / OFFICIAL PROJECT</span>
+            </div>
+          </div>
+          <dl class="panel credit-list">
+            <div class="credit-row"><dt>Title</dt><dd>劇場版3-Sync -Another Stories-</dd></div>
+            <div class="credit-row"><dt>Release</dt><dd>2026年10月10日</dd></div>
+            <div class="credit-row"><dt>Planning</dt><dd>Celestial Pulse Line</dd></div>
+            <div class="credit-row"><dt>Music</dt><dd>3-Sync / Guest Artists</dd></div>
+            <div class="credit-row"><dt>Event Type</dt><dd>Music Cinematic Project</dd></div>
+            <div class="credit-row"><dt>Notice</dt><dd>掲載内容は制作中のため、予告なく変更される場合があります。</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="guest-modal" id="guestModal" hidden>
+    <div class="guest-modal-backdrop" data-guest-modal-close></div>
+    <section class="guest-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guestModalTitle">
+      <button class="guest-modal-close" type="button" aria-label="閉じる" data-guest-modal-close>×</button>
+      <div class="guest-modal-inner">
+        <header class="guest-modal-header">
+          <span class="guest-modal-label" id="guestModalLabel">GUEST STORY</span>
+          <h2 class="guest-modal-title" id="guestModalTitle"></h2>
+        </header>
+        <figure class="guest-modal-visual" id="guestModalVisual">
+          <img id="guestModalImage" src="" alt="">
+          <span class="guest-modal-image-pending">KEY VISUAL COMING SOON</span>
+        </figure>
+        <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="video">動画</button>
+        </div>
+        <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
+          <div class="guest-modal-empty" id="guestModalEmpty">項目を選択してください。</div>
+          <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+          <a class="guest-modal-external" id="guestModalExternal" href="#" target="_blank" rel="noopener noreferrer">別のタブで開く</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="footer">
+    <img class="footer-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync" />
+    <p>© 2026 Celestial Pulse Line / 3-Sync -Another Stories-</p>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector('.menu-button');
+    const navLinks = document.querySelector('#navLinks');
+
+    menuButton.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('is-open');
+      menuButton.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    navLinks.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('is-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    /* Add each participant's URLs here when they are released. */
+    const guestMedia = {
+      /* "01": { story: "https://note.com/...", setting: "https://note.com/...", video: "https://youtu.be/..." } */
+    };
+
+    const guestModal = document.querySelector('#guestModal');
+    const guestModalDialog = guestModal.querySelector('.guest-modal-dialog');
+    const guestModalTitle = document.querySelector('#guestModalTitle');
+    const guestModalLabel = document.querySelector('#guestModalLabel');
+    const guestModalVisual = document.querySelector('#guestModalVisual');
+    const guestModalImage = document.querySelector('#guestModalImage');
+    const guestModalContent = document.querySelector('#guestModalContent');
+    const guestModalEmpty = document.querySelector('#guestModalEmpty');
+    const guestModalFrame = document.querySelector('#guestModalFrame');
+    const guestModalExternal = document.querySelector('#guestModalExternal');
+    const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
+    const guestCards = [...document.querySelectorAll('.guest-card')];
+    let activeGuestNumber = '';
+    let lastGuestTrigger = null;
+
+    function safeWebUrl(value) {
+      if (!value) return '';
+      try {
+        const url = new URL(value, window.location.href);
+        return ['https:', 'http:'].includes(url.protocol) ? url.href : '';
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function toNoteEmbedUrl(value) {
+      const safeUrl = safeWebUrl(value);
+      if (!safeUrl) return '';
+      const url = new URL(safeUrl);
+      if (!/(^|\.)note\.com$/i.test(url.hostname)) return safeUrl;
+      const noteId = url.pathname.split('/').filter((part) => /^n[a-z0-9]+$/i.test(part)).pop();
+      return noteId ? `https://note.com/embed/notes/${encodeURIComponent(noteId)}` : safeUrl;
+    }
+
+    function toYouTubeEmbedUrl(value) {
+      const safeUrl = safeWebUrl(value);
+      if (!safeUrl) return '';
+      const url = new URL(safeUrl);
+      const host = url.hostname.replace(/^www\./, '').toLowerCase();
+      let videoId = '';
+
+      if (host === 'youtu.be') {
+        videoId = url.pathname.split('/').filter(Boolean)[0] || '';
+      } else if (host === 'youtube.com' || host === 'm.youtube.com' || host === 'youtube-nocookie.com') {
+        if (url.pathname === '/watch') videoId = url.searchParams.get('v') || '';
+        if (!videoId) {
+          const parts = url.pathname.split('/').filter(Boolean);
+          const marker = parts.findIndex((part) => ['shorts', 'embed', 'live'].includes(part));
+          if (marker >= 0) videoId = parts[marker + 1] || '';
+        }
+      }
+
+      return /^[a-zA-Z0-9_-]{6,}$/.test(videoId)
+        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`
+        : safeUrl;
+    }
+
+    function resetGuestPanel() {
+      guestModalTabs.forEach((tab) => tab.setAttribute('aria-selected', 'false'));
+      guestModalContent.hidden = true;
+      guestModalFrame.hidden = true;
+      guestModalFrame.src = 'about:blank';
+      guestModalFrame.classList.remove('is-video');
+      guestModalExternal.classList.remove('is-visible');
+      guestModalExternal.removeAttribute('href');
+      guestModalEmpty.hidden = false;
+      guestModalEmpty.textContent = '項目を選択してください。';
+    }
+
+    function showGuestPanel(panelName) {
+      const data = guestMedia[activeGuestNumber] || {};
+      const sourceUrl = safeWebUrl(data[panelName]);
+      const labels = { story: 'ストーリー', setting: '設定', video: '動画' };
+
+      guestModalTabs.forEach((tab) => {
+        tab.setAttribute('aria-selected', String(tab.dataset.guestPanel === panelName));
+      });
+      guestModalContent.hidden = false;
+      guestModalFrame.src = 'about:blank';
+      guestModalFrame.hidden = true;
+      guestModalFrame.classList.toggle('is-video', panelName === 'video');
+      guestModalExternal.classList.remove('is-visible');
+      guestModalExternal.removeAttribute('href');
+
+      if (!sourceUrl) {
+        guestModalEmpty.hidden = false;
+        guestModalEmpty.textContent = `${labels[panelName]}は現在準備中です。`;
+        return;
+      }
+
+      const embedUrl = panelName === 'video' ? toYouTubeEmbedUrl(sourceUrl) : toNoteEmbedUrl(sourceUrl);
+      guestModalEmpty.hidden = true;
+      guestModalFrame.title = `${guestModalTitle.textContent} ${labels[panelName]}`;
+      guestModalFrame.src = embedUrl;
+      guestModalFrame.hidden = false;
+      guestModalExternal.href = sourceUrl;
+      guestModalExternal.textContent = panelName === 'video' ? 'YouTubeで開く' : 'noteで開く';
+      guestModalExternal.classList.add('is-visible');
+    }
+
+    function openGuestModal(card) {
+      const name = card.querySelector('.guest-name')?.textContent.trim() || 'Guest Artist';
+      const image = card.querySelector('.guest-avatar img');
+      activeGuestNumber = card.dataset.no || '';
+      lastGuestTrigger = card;
+      guestModalTitle.textContent = name;
+      guestModalLabel.textContent = `GUEST ${activeGuestNumber} / ANOTHER STORY`;
+
+      if (image) {
+        guestModalImage.src = image.currentSrc || image.src;
+        guestModalImage.alt = `${name} キービジュアル`;
+        guestModalVisual.classList.remove('is-pending');
+      } else {
+        guestModalImage.removeAttribute('src');
+        guestModalImage.alt = '';
+        guestModalVisual.classList.add('is-pending');
+      }
+
+      resetGuestPanel();
+      guestModal.hidden = false;
+      document.body.classList.add('modal-open');
+      requestAnimationFrame(() => {
+        guestModal.classList.add('is-open');
+        guestModal.querySelector('.guest-modal-close').focus();
+      });
+    }
+
+    function closeGuestModal() {
+      if (guestModal.hidden) return;
+      guestModal.classList.remove('is-open');
+      guestModalFrame.src = 'about:blank';
+      document.body.classList.remove('modal-open');
+      window.setTimeout(() => {
+        guestModal.hidden = true;
+        if (lastGuestTrigger) lastGuestTrigger.focus();
+      }, 180);
+    }
+
+    guestCards.forEach((card) => {
+      const name = card.querySelector('.guest-name')?.textContent.trim() || '参加アーティスト';
+      card.tabIndex = 0;
+      card.setAttribute('role', 'button');
+      card.setAttribute('aria-haspopup', 'dialog');
+      card.setAttribute('aria-controls', 'guestModal');
+      card.setAttribute('aria-label', `${name}の作品詳細を開く`);
+      card.addEventListener('click', (event) => {
+        if (!event.target.closest('a, button')) openGuestModal(card);
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openGuestModal(card);
+        }
+      });
+    });
+
+    guestModalTabs.forEach((tab) => {
+      tab.addEventListener('click', () => showGuestPanel(tab.dataset.guestPanel));
+    });
+
+    guestModal.querySelectorAll('[data-guest-modal-close]').forEach((control) => {
+      control.addEventListener('click', closeGuestModal);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (guestModal.hidden) return;
+      if (event.key === 'Escape') closeGuestModal();
+      if (event.key === 'Tab') {
+        const focusable = [...guestModalDialog.querySelectorAll('button:not([disabled]), a[href], iframe')]
+          .filter((element) => !element.hidden && element.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let width = 0;
+    let height = 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      makeParticles();
+    }
+
+    function makeParticles() {
+      const count = Math.min(190, Math.floor((width * height) / 7200));
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2.9 + 0.65,
+        vx: (Math.random() - 0.5) * 0.34,
+        vy: Math.random() * -0.42 - 0.07,
+        drift: Math.random() * Math.PI * 2,
+        twinkle: Math.random() * 0.018 + 0.006,
+        hue: Math.random() > 0.52 ? 'cyan' : (Math.random() > 0.5 ? 'violet' : 'pink'),
+        alpha: Math.random() * 0.72 + 0.28
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        if (!prefersReducedMotion) {
+          p.drift += p.twinkle;
+          p.x += p.vx + Math.sin(p.drift) * 0.12;
+          p.y += p.vy;
+          if (p.y < -18) p.y = height + 18;
+          if (p.x < -18) p.x = width + 18;
+          if (p.x > width + 18) p.x = -18;
+        }
+
+        const pulse = prefersReducedMotion ? 1 : 0.76 + Math.sin(p.drift * 2.2) * 0.24;
+        const glow = p.r * 9.5;
+        const gradient = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glow);
+        const color = p.hue === 'cyan' ? '0,217,255' : (p.hue === 'pink' ? '255,79,216' : '123,92,255');
+        gradient.addColorStop(0, `rgba(${color},${p.alpha * pulse})`);
+        gradient.addColorStop(0.26, `rgba(${color},${p.alpha * 0.34 * pulse})`);
+        gradient.addColorStop(1, `rgba(${color},0)`);
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, glow, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = `rgba(255,255,255,${0.42 * pulse})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, Math.max(0.8, p.r * 0.34), 0, Math.PI * 2);
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    draw();
+  </script>
+</body>
+</html>

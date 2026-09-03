@@ -686,6 +686,30 @@
       gap: 16px;
     }
 
+    .guest-grid--sync {
+      margin-bottom: 88px;
+    }
+
+    .sync-card {
+      border-color: rgba(255, 207, 92, 0.22);
+      background:
+        radial-gradient(circle at 82% 15%, rgba(255, 207, 92, 0.12), transparent 34%),
+        linear-gradient(145deg, rgba(123,92,255,0.12), rgba(255,255,255,0.045));
+    }
+
+    .guest-card.sync-card:hover {
+      border-color: rgba(255, 207, 92, 0.55);
+      background:
+        radial-gradient(circle at 82% 15%, rgba(255, 207, 92, 0.2), transparent 38%),
+        linear-gradient(145deg, rgba(123,92,255,0.2), rgba(255,255,255,0.06));
+    }
+
+    .sync-card .guest-role {
+      color: #ffe18f;
+      border-color: rgba(255, 225, 143, 0.32);
+      background: rgba(255, 207, 92, 0.07);
+    }
+
     .guest-card {
       position: relative;
       overflow: hidden;
@@ -1923,6 +1947,18 @@
       <div class="container">
         <div class="section-head">
           <div>
+            <span class="section-kicker">3-Sync / Main Stories</span>
+            <h2 class="section-title">3-SYNC MEMBERS</h2>
+          </div>
+          <p class="section-lead">物語の中心を担う3人。カードから小説・設定・映像を開けます。</p>
+        </div>
+        <div class="guest-grid guest-grid--sync">
+          <article class="panel guest-card sync-card" data-no="LUA" data-key="sync-luarie" data-group="sync"><span class="guest-role">3-SYNC / LUA</span><div class="guest-avatar"><img src="3sync_assets/member_luarie.png" alt="ルアリエ アイコン"></div><h3 class="guest-name">ルアリエ</h3><p class="guest-track"><span>Story：</span>Another Stories</p></article>
+          <article class="panel guest-card sync-card" data-no="MIMI" data-key="sync-mimi" data-group="sync"><span class="guest-role">3-SYNC / MIMI</span><div class="guest-avatar"><img src="3sync_assets/character_mimi_visual.jpg" alt="夜凪ミミ アイコン"></div><h3 class="guest-name">夜凪ミミ</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
+          <article class="panel guest-card sync-card" data-no="A" data-key="sync-achan" data-group="sync"><span class="guest-role">3-SYNC / A-CHAN</span><div class="guest-avatar"><img src="3sync_assets/character_achan_visual.jpg" alt="えーちゃん アイコン"></div><h3 class="guest-name">えーちゃん</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
+        </div>
+        <div class="section-head">
+          <div>
             <span class="section-kicker">19 Artists / 19 Stories</span>
             <h2 class="section-title">GUEST ARTISTS</h2>
           </div>
@@ -1932,7 +1968,7 @@
           <article class="panel guest-card" data-no="01"><span class="guest-role">GUEST 01</span><div class="guest-avatar"><img src="3sync_assets/guest_catbeat.png" alt="CatBeat / GABu アイコン"></div><h3 class="guest-name">CatBeat / GABu</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
           <article class="panel guest-card" data-no="02"><span class="guest-role">GUEST 02</span><div class="guest-avatar"><img src="3sync_assets/guest_daiten.png" alt="Daiten アイコン"></div><h3 class="guest-name">Daiten</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
           <article class="panel guest-card" data-no="03"><span class="guest-role">GUEST 03</span><div class="guest-avatar"><img src="3sync_assets/guest_katsunn.jpeg" alt="Katsunn アイコン"></div><h3 class="guest-name">Katsunn</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="04"><span class="guest-role">GUEST 04</span><div class="guest-avatar guest-avatar--pending" aria-label="アイコン準備中"><span>COMING<br>SOON</span></div><h3 class="guest-name">Makotang</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="04"><span class="guest-role">GUEST 04</span><div class="guest-avatar"><img src="3sync_assets/guest_makotang.jpg" alt="Makotang アイコン"></div><h3 class="guest-name">Makotang</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
           <article class="panel guest-card" data-no="05"><span class="guest-role">GUEST 05</span><div class="guest-avatar"><img src="3sync_assets/guest_makotoai.png" alt="MakotoAI アイコン"></div><h3 class="guest-name">MakotoAI</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
           <article class="panel guest-card" data-no="06"><span class="guest-role">GUEST 06</span><div class="guest-avatar"><img src="3sync_assets/guest_mogu.png" alt="MOGU アイコン"></div><h3 class="guest-name">MOGU</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
           <article class="panel guest-card" data-no="07"><span class="guest-role">GUEST 07</span><div class="guest-avatar"><img src="3sync_assets/guest_nue.jpg" alt="nue~鵺~ アイコン"></div><h3 class="guest-name">nue~鵺~</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
@@ -2115,6 +2151,13 @@
 
     /* Add each participant's URLs here when they are released. */
     const guestMedia = {
+      "sync-luarie": {
+        video: "https://youtu.be/zMjVDDwyeEU?si=XdBqDaTLTwqxalrQ",
+        story: "https://note.com/luarie_takamiya/n/n60a44afb0e20",
+        storyImage: "3sync_assets/member_luarie.png",
+        setting: "https://note.com/luarie_takamiya/n/n792ef57858f1",
+        settingImage: "3sync_assets/member_luarie.png"
+      }
       /*
         "01": {
           video: "https://youtu.be/...",
@@ -2302,11 +2345,13 @@
     function openGuestModal(card) {
       const name = card.querySelector('.guest-name')?.textContent.trim() || 'Guest Artist';
       const image = card.querySelector('.guest-avatar img');
-      activeGuestNumber = card.dataset.no || '';
+      activeGuestNumber = card.dataset.key || card.dataset.no || '';
       activeGuestFallbackImage = image ? (image.currentSrc || image.src) : '';
       lastGuestTrigger = card;
       guestModalTitle.textContent = name;
-      guestModalLabel.textContent = `GUEST ${activeGuestNumber} / ANOTHER STORY`;
+      guestModalLabel.textContent = card.dataset.group === 'sync'
+        ? `3-SYNC ${card.dataset.no || ''} / MAIN STORY`
+        : `GUEST ${card.dataset.no || ''} / ANOTHER STORY`;
 
       resetGuestPanel();
       configureGuestMedia(guestMedia[activeGuestNumber] || {}, name);

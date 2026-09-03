@@ -1745,11 +1745,23 @@
       font-size: 14px;
       letter-spacing: .08em;
     }
+    .guest-modal-empty[hidden] { display: none; }
     .guest-modal-frame {
       display: block;
       width: 100%;
       height: min(74svh, 760px);
       border: 0;
+      background: #fff;
+    }
+    .guest-modal-frame[hidden] { display: none; }
+    .guest-modal-frame.is-note {
+      width: min(100%, 494px);
+      height: 400px;
+      margin: 0 auto;
+      background: transparent;
+    }
+    .guest-modal-frame.is-reader {
+      height: min(80svh, 920px);
       background: #fff;
     }
     .guest-modal-external {
@@ -1820,6 +1832,7 @@
       .guest-content-image { height: 100%; }
       .guest-modal-empty { min-height: 280px; }
       .guest-modal-frame { height: 72svh; }
+      .guest-modal-frame.is-reader { height: 76svh; }
       .guest-link-list { grid-template-columns: 1fr; min-height: 280px; padding: 24px 18px; }
     }
 
@@ -2200,9 +2213,11 @@
     const guestMedia = {
       "sync-luarie": {
         video: "https://youtu.be/zMjVDDwyeEU?si=XdBqDaTLTwqxalrQ",
-        story: "https://note.com/luarie_takamiya/n/n60a44afb0e20",
+        story: "3sync_assets/luarie_story.html",
+        storyExternal: "https://note.com/luarie_takamiya/n/n60a44afb0e20",
         storyImage: "3sync_assets/member_luarie.png",
-        setting: "https://note.com/luarie_takamiya/n/n792ef57858f1",
+        setting: "3sync_assets/luarie_setting.html",
+        settingExternal: "https://note.com/luarie_takamiya/n/n792ef57858f1",
         settingImage: "3sync_assets/member_luarie.png"
       }
       /*
@@ -2210,8 +2225,10 @@
           video: "https://youtu.be/...",
           audio: "https://example.com/song.mp3",
           story: "https://note.com/...",
+          storyExternal: "https://note.com/...",
           storyImage: "<story-image-path>",
           setting: "https://note.com/...",
+          settingExternal: "https://note.com/...",
           settingImage: "<setting-image-path>",
           links: {
             x: "https://x.com/...",
@@ -2293,6 +2310,7 @@
       guestModalContent.hidden = true;
       guestModalFrame.hidden = true;
       guestModalFrame.src = 'about:blank';
+      guestModalFrame.classList.remove('is-note', 'is-reader');
       guestLinkList.hidden = true;
       guestLinkList.replaceChildren();
       guestModalExternal.classList.remove('is-visible');
@@ -2308,6 +2326,7 @@
     function showGuestPanel(panelName) {
       const data = guestMedia[activeGuestNumber] || {};
       const sourceUrl = safeWebUrl(data[panelName]);
+      const externalUrl = safeWebUrl(data[`${panelName}External`] || data[panelName]);
       const labels = { story: 'ストーリー', setting: '設定', links: 'リンク集' };
       const contentImageUrl = safeWebUrl(data[`${panelName}Image`] || activeGuestFallbackImage);
 
@@ -2371,13 +2390,21 @@
       }
 
       const embedUrl = toNoteEmbedUrl(sourceUrl);
+      const sourceObject = new URL(sourceUrl);
+      const sourceHost = sourceObject.hostname;
+      const isNote = /(^|\.)note\.com$/i.test(sourceHost);
+      const isReader = /\/3sync_assets\/[^/]+\.html$/i.test(sourceObject.pathname);
       guestModalEmpty.hidden = true;
       guestModalFrame.title = `${guestModalTitle.textContent} ${labels[panelName]}`;
+      guestModalFrame.classList.toggle('is-note', isNote);
+      guestModalFrame.classList.toggle('is-reader', isReader);
       guestModalFrame.src = embedUrl;
       guestModalFrame.hidden = false;
-      guestModalExternal.href = sourceUrl;
-      guestModalExternal.textContent = 'noteで開く';
-      guestModalExternal.classList.add('is-visible');
+      if (externalUrl) {
+        guestModalExternal.href = externalUrl;
+        guestModalExternal.textContent = (isNote || isReader) ? 'noteで原文を読む' : '別ページで開く';
+        guestModalExternal.classList.add('is-visible');
+      }
     }
 
     function pauseGuestVideo() {

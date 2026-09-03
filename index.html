@@ -999,6 +999,10 @@
       letter-spacing: 0.12em;
     }
 
+    .footer p {
+      line-height: 1.9;
+    }
+
     .reveal {
       opacity: 0;
       transform: translateY(26px);
@@ -1651,7 +1655,7 @@
     }
     .guest-modal-tabs {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-top: 22px;
     }
@@ -1692,7 +1696,7 @@
     .guest-content-grid {
       display: grid;
       grid-template-columns: minmax(260px,.8fr) minmax(0,1.4fr);
-      min-height: 560px;
+      align-items: start;
       animation: guestPanelIn 220ms ease both;
     }
     @keyframes guestPanelIn {
@@ -1703,7 +1707,9 @@
       position: relative;
       display: grid;
       place-items: center;
-      min-height: 560px;
+      min-height: 0;
+      aspect-ratio: 1;
+      align-self: start;
       overflow: hidden;
       border-right: 1px solid rgba(255,255,255,.12);
       background: radial-gradient(circle at 50% 35%, rgba(123,92,255,.15), transparent 54%), rgba(0,0,0,.32);
@@ -1712,8 +1718,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      max-height: 760px;
-      object-fit: contain;
+      object-fit: cover;
+      object-position: center;
     }
     .guest-content-image[hidden] { display: none; }
     .guest-content-image-pending {
@@ -1761,6 +1767,44 @@
     }
     .guest-modal-external.is-visible { display: flex; }
 
+    .guest-link-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-content: center;
+      gap: 12px;
+      min-height: 560px;
+      padding: clamp(24px, 6vw, 64px);
+    }
+    .guest-link-list[hidden] { display: none; }
+    .guest-link-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 64px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,.17);
+      border-radius: 10px;
+      color: #fff;
+      background: linear-gradient(115deg, rgba(0,217,255,.09), rgba(123,92,255,.12), rgba(255,79,216,.08));
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      transition: 160ms ease;
+    }
+    .guest-link-item::after {
+      content: "↗";
+      color: var(--sub);
+      font-size: 18px;
+    }
+    .guest-link-item:hover,
+    .guest-link-item:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba(0,217,255,.58);
+      background: linear-gradient(115deg, rgba(0,217,255,.17), rgba(123,92,255,.2), rgba(255,79,216,.14));
+      outline: none;
+    }
+
     @media (max-width: 640px) {
       .guest-modal { padding: 0; }
       .guest-modal-dialog { width: 100%; max-height: 100svh; border-radius: 0; border-left: 0; border-right: 0; }
@@ -1772,10 +1816,11 @@
       .guest-modal-tabs { gap: 6px; }
       .guest-modal-tab { min-height: 48px; padding: 10px 6px; font-size: 13px; letter-spacing: .05em; }
       .guest-content-grid { grid-template-columns: 1fr; min-height: 0; }
-      .guest-content-visual { min-height: 52svh; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
-      .guest-content-image { height: 52svh; }
+      .guest-content-visual { min-height: 0; aspect-ratio: 1; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+      .guest-content-image { height: 100%; }
       .guest-modal-empty { min-height: 280px; }
       .guest-modal-frame { height: 72svh; }
+      .guest-link-list { grid-template-columns: 1fr; min-height: 280px; padding: 24px 18px; }
     }
 
   </style>
@@ -2104,12 +2149,13 @@
               <span id="guestAudioButtonLabel">音源のみ再生</span>
             </button>
             <audio id="guestAudioPlayer" preload="metadata"></audio>
-            <span class="guest-media-help">曲を流したまま、下の物語と設定を読めます。</span>
+            <span class="guest-media-help">曲を流したまま、物語・設定・リンク集を開けます。</span>
           </div>
         </div>
         <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="links">リンク集</button>
         </div>
         <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
           <div class="guest-content-grid">
@@ -2120,6 +2166,7 @@
             <div class="guest-content-reader">
               <div class="guest-modal-empty" id="guestModalEmpty">項目を選択してください。</div>
               <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+              <div class="guest-link-list" id="guestLinkList" aria-label="公式リンク" hidden></div>
               <a class="guest-modal-external" id="guestModalExternal" href="#" target="_blank" rel="noopener noreferrer">noteで開く</a>
             </div>
           </div>
@@ -2130,7 +2177,7 @@
 
   <footer class="footer">
     <img class="footer-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync" />
-    <p>© 2026 Celestial Pulse Line / 3-Sync -Another Stories-</p>
+    <p>© 3-Sync<br>Guest characters and works © their respective creators.</p>
   </footer>
 
   <script>
@@ -2165,7 +2212,13 @@
           story: "https://note.com/...",
           storyImage: "<story-image-path>",
           setting: "https://note.com/...",
-          settingImage: "<setting-image-path>"
+          settingImage: "<setting-image-path>",
+          links: {
+            x: "https://x.com/...",
+            youtube: "https://www.youtube.com/@...",
+            spotify: "https://open.spotify.com/artist/...",
+            homepage: "https://example.com/"
+          }
         }
       */
     };
@@ -2185,6 +2238,7 @@
     const guestContentImagePending = document.querySelector('#guestContentImagePending');
     const guestModalEmpty = document.querySelector('#guestModalEmpty');
     const guestModalFrame = document.querySelector('#guestModalFrame');
+    const guestLinkList = document.querySelector('#guestLinkList');
     const guestModalExternal = document.querySelector('#guestModalExternal');
     const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
     const guestCards = [...document.querySelectorAll('.guest-card')];
@@ -2239,6 +2293,8 @@
       guestModalContent.hidden = true;
       guestModalFrame.hidden = true;
       guestModalFrame.src = 'about:blank';
+      guestLinkList.hidden = true;
+      guestLinkList.replaceChildren();
       guestModalExternal.classList.remove('is-visible');
       guestModalExternal.removeAttribute('href');
       guestContentImage.hidden = true;
@@ -2252,7 +2308,7 @@
     function showGuestPanel(panelName) {
       const data = guestMedia[activeGuestNumber] || {};
       const sourceUrl = safeWebUrl(data[panelName]);
-      const labels = { story: 'ストーリー', setting: '設定' };
+      const labels = { story: 'ストーリー', setting: '設定', links: 'リンク集' };
       const contentImageUrl = safeWebUrl(data[`${panelName}Image`] || activeGuestFallbackImage);
 
       guestModalTabs.forEach((tab) => {
@@ -2261,6 +2317,8 @@
       guestModalContent.hidden = false;
       guestModalFrame.src = 'about:blank';
       guestModalFrame.hidden = true;
+      guestLinkList.hidden = true;
+      guestLinkList.replaceChildren();
       guestModalExternal.classList.remove('is-visible');
       guestModalExternal.removeAttribute('href');
 
@@ -2273,6 +2331,37 @@
         guestContentImage.hidden = true;
         guestContentImage.removeAttribute('src');
         guestContentImagePending.hidden = false;
+      }
+
+      if (panelName === 'links') {
+        const linkLabels = {
+          x: 'X',
+          youtube: 'YouTube',
+          spotify: 'Spotify',
+          homepage: 'ホームページ'
+        };
+        const links = Object.entries(linkLabels)
+          .map(([key, label]) => ({ label, url: safeWebUrl(data.links?.[key]) }))
+          .filter((item) => item.url);
+
+        if (!links.length) {
+          guestModalEmpty.hidden = false;
+          guestModalEmpty.textContent = 'リンクは現在準備中です。';
+          return;
+        }
+
+        links.forEach(({ label, url }) => {
+          const link = document.createElement('a');
+          link.className = 'guest-link-item';
+          link.href = url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = label;
+          guestLinkList.append(link);
+        });
+        guestModalEmpty.hidden = true;
+        guestLinkList.hidden = false;
+        return;
       }
 
       if (!sourceUrl) {
@@ -2355,6 +2444,7 @@
 
       resetGuestPanel();
       configureGuestMedia(guestMedia[activeGuestNumber] || {}, name);
+      showGuestPanel('story');
       guestModal.hidden = false;
       document.body.classList.add('modal-open');
       requestAnimationFrame(() => {

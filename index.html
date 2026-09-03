@@ -1538,38 +1538,98 @@
       line-height: 1.2;
       letter-spacing: .03em;
     }
-    .guest-modal-visual {
+    .guest-modal-media {
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 14px;
+      background: rgba(0,0,0,.32);
+      box-shadow: 0 18px 52px rgba(0,0,0,.28);
+    }
+    .guest-modal-video-stage {
       position: relative;
       display: grid;
       place-items: center;
       width: 100%;
-      min-height: min(58svh, 680px);
+      aspect-ratio: 16 / 9;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 12px;
-      background: linear-gradient(145deg, rgba(0,217,255,.06), rgba(123,92,255,.08), rgba(255,79,216,.06));
+      background:
+        radial-gradient(circle at 50% 42%, rgba(123,92,255,.18), transparent 48%),
+        #02030a;
     }
-    .guest-modal-visual img {
+    .guest-modal-video,
+    .guest-modal-poster {
+      position: absolute;
+      inset: 0;
       display: block;
       width: 100%;
-      height: min(58svh, 680px);
-      object-fit: contain;
-      background: rgba(0,0,0,.28);
+      height: 100%;
+      border: 0;
     }
-    .guest-modal-visual.is-pending img { display: none; }
-    .guest-modal-image-pending {
-      display: none;
-      color: rgba(255,255,255,.46);
-      font-size: 13px;
+    .guest-modal-video { z-index: 2; background: #000; }
+    .guest-modal-poster { object-fit: contain; background: rgba(0,0,0,.22); }
+    .guest-modal-poster[hidden],
+    .guest-modal-video[hidden] { display: none; }
+    .guest-video-pending {
+      position: relative;
+      z-index: 1;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.62);
+      background: rgba(3,4,14,.72);
+      font-size: 11px;
       font-weight: 900;
-      letter-spacing: .18em;
+      letter-spacing: .16em;
     }
-    .guest-modal-visual.is-pending .guest-modal-image-pending { display: block; }
+    .guest-video-pending[hidden] { display: none; }
+    .guest-media-controls {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: linear-gradient(90deg, rgba(0,217,255,.05), rgba(123,92,255,.08), rgba(255,79,216,.05));
+    }
+    .guest-audio-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 18px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,.055);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      cursor: pointer;
+      transition: 160ms ease;
+    }
+    .guest-audio-button:hover:not(:disabled),
+    .guest-audio-button:focus-visible {
+      border-color: var(--sub);
+      background: rgba(0,217,255,.1);
+      outline: none;
+    }
+    .guest-audio-button.is-playing {
+      border-color: var(--accent);
+      background: linear-gradient(100deg, rgba(0,217,255,.18), rgba(255,79,216,.2));
+      box-shadow: 0 0 22px rgba(255,79,216,.14);
+    }
+    .guest-audio-button:disabled { opacity: .42; cursor: not-allowed; }
+    .guest-audio-icon { font-size: 19px; line-height: 1; }
+    .guest-media-help {
+      color: rgba(255,255,255,.52);
+      font-size: 12px;
+      letter-spacing: .05em;
+    }
     .guest-modal-tabs {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      margin-top: 16px;
+      margin-top: 22px;
     }
     .guest-modal-tab {
       min-height: 52px;
@@ -1605,10 +1665,50 @@
       background: rgba(0,0,0,.3);
     }
     .guest-modal-content[hidden] { display: none; }
+    .guest-content-grid {
+      display: grid;
+      grid-template-columns: minmax(260px,.8fr) minmax(0,1.4fr);
+      min-height: 560px;
+      animation: guestPanelIn 220ms ease both;
+    }
+    @keyframes guestPanelIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .guest-content-visual {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 560px;
+      overflow: hidden;
+      border-right: 1px solid rgba(255,255,255,.12);
+      background: radial-gradient(circle at 50% 35%, rgba(123,92,255,.15), transparent 54%), rgba(0,0,0,.32);
+    }
+    .guest-content-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: 760px;
+      object-fit: contain;
+    }
+    .guest-content-image[hidden] { display: none; }
+    .guest-content-image-pending {
+      color: rgba(255,255,255,.5);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .14em;
+      text-align: center;
+    }
+    .guest-content-image-pending[hidden] { display: none; }
+    .guest-content-reader {
+      position: relative;
+      min-width: 0;
+      background: rgba(255,255,255,.025);
+    }
     .guest-modal-empty {
       display: grid;
       place-items: center;
-      min-height: 240px;
+      min-height: 560px;
       padding: 32px;
       color: rgba(255,255,255,.55);
       text-align: center;
@@ -1618,14 +1718,9 @@
     .guest-modal-frame {
       display: block;
       width: 100%;
-      height: min(72svh, 760px);
+      height: min(74svh, 760px);
       border: 0;
       background: #fff;
-    }
-    .guest-modal-frame.is-video {
-      height: auto;
-      aspect-ratio: 16 / 9;
-      background: #000;
     }
     .guest-modal-external {
       display: none;
@@ -1647,10 +1742,15 @@
       .guest-modal-dialog { width: 100%; max-height: 100svh; border-radius: 0; border-left: 0; border-right: 0; }
       .guest-modal-inner { padding: 20px 14px 36px; }
       .guest-modal-header { margin-bottom: 18px; }
-      .guest-modal-visual,
-      .guest-modal-visual img { min-height: 0; height: 54svh; }
+      .guest-media-controls { align-items: stretch; flex-direction: column; }
+      .guest-audio-button { width: 100%; }
+      .guest-media-help { text-align: center; }
       .guest-modal-tabs { gap: 6px; }
       .guest-modal-tab { min-height: 48px; padding: 10px 6px; font-size: 13px; letter-spacing: .05em; }
+      .guest-content-grid { grid-template-columns: 1fr; min-height: 0; }
+      .guest-content-visual { min-height: 52svh; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); }
+      .guest-content-image { height: 52svh; }
+      .guest-modal-empty { min-height: 280px; }
       .guest-modal-frame { height: 72svh; }
     }
 
@@ -1956,19 +2056,37 @@
           <span class="guest-modal-label" id="guestModalLabel">GUEST STORY</span>
           <h2 class="guest-modal-title" id="guestModalTitle"></h2>
         </header>
-        <figure class="guest-modal-visual" id="guestModalVisual">
-          <img id="guestModalImage" src="" alt="">
-          <span class="guest-modal-image-pending">KEY VISUAL COMING SOON</span>
-        </figure>
+        <div class="guest-modal-media">
+          <div class="guest-modal-video-stage" id="guestVideoStage">
+            <img class="guest-modal-poster" id="guestModalPoster" src="" alt="">
+            <iframe class="guest-modal-video" id="guestModalVideo" title="参加作品動画" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+            <span class="guest-video-pending" id="guestVideoPending">VIDEO COMING SOON</span>
+          </div>
+          <div class="guest-media-controls">
+            <button class="guest-audio-button" id="guestAudioButton" type="button" disabled>
+              <span class="guest-audio-icon" aria-hidden="true">♪</span>
+              <span id="guestAudioButtonLabel">音源のみ再生</span>
+            </button>
+            <audio id="guestAudioPlayer" preload="metadata"></audio>
+            <span class="guest-media-help">曲を流したまま、下の物語と設定を読めます。</span>
+          </div>
+        </div>
         <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
-          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="video">動画</button>
         </div>
         <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
-          <div class="guest-modal-empty" id="guestModalEmpty">項目を選択してください。</div>
-          <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
-          <a class="guest-modal-external" id="guestModalExternal" href="#" target="_blank" rel="noopener noreferrer">別のタブで開く</a>
+          <div class="guest-content-grid">
+            <figure class="guest-content-visual">
+              <img class="guest-content-image" id="guestContentImage" src="" alt="">
+              <span class="guest-content-image-pending" id="guestContentImagePending">IMAGE COMING SOON</span>
+            </figure>
+            <div class="guest-content-reader">
+              <div class="guest-modal-empty" id="guestModalEmpty">項目を選択してください。</div>
+              <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+              <a class="guest-modal-external" id="guestModalExternal" href="#" target="_blank" rel="noopener noreferrer">noteで開く</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -1997,22 +2115,38 @@
 
     /* Add each participant's URLs here when they are released. */
     const guestMedia = {
-      /* "01": { story: "https://note.com/...", setting: "https://note.com/...", video: "https://youtu.be/..." } */
+      /*
+        "01": {
+          video: "https://youtu.be/...",
+          audio: "https://example.com/song.mp3",
+          story: "https://note.com/...",
+          storyImage: "<story-image-path>",
+          setting: "https://note.com/...",
+          settingImage: "<setting-image-path>"
+        }
+      */
     };
 
     const guestModal = document.querySelector('#guestModal');
     const guestModalDialog = guestModal.querySelector('.guest-modal-dialog');
     const guestModalTitle = document.querySelector('#guestModalTitle');
     const guestModalLabel = document.querySelector('#guestModalLabel');
-    const guestModalVisual = document.querySelector('#guestModalVisual');
-    const guestModalImage = document.querySelector('#guestModalImage');
+    const guestModalPoster = document.querySelector('#guestModalPoster');
+    const guestModalVideo = document.querySelector('#guestModalVideo');
+    const guestVideoPending = document.querySelector('#guestVideoPending');
+    const guestAudioButton = document.querySelector('#guestAudioButton');
+    const guestAudioButtonLabel = document.querySelector('#guestAudioButtonLabel');
+    const guestAudioPlayer = document.querySelector('#guestAudioPlayer');
     const guestModalContent = document.querySelector('#guestModalContent');
+    const guestContentImage = document.querySelector('#guestContentImage');
+    const guestContentImagePending = document.querySelector('#guestContentImagePending');
     const guestModalEmpty = document.querySelector('#guestModalEmpty');
     const guestModalFrame = document.querySelector('#guestModalFrame');
     const guestModalExternal = document.querySelector('#guestModalExternal');
     const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
     const guestCards = [...document.querySelectorAll('.guest-card')];
     let activeGuestNumber = '';
+    let activeGuestFallbackImage = '';
     let lastGuestTrigger = null;
 
     function safeWebUrl(value) {
@@ -2053,7 +2187,7 @@
       }
 
       return /^[a-zA-Z0-9_-]{6,}$/.test(videoId)
-        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0`
+        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0&enablejsapi=1&playsinline=1`
         : safeUrl;
     }
 
@@ -2062,9 +2196,12 @@
       guestModalContent.hidden = true;
       guestModalFrame.hidden = true;
       guestModalFrame.src = 'about:blank';
-      guestModalFrame.classList.remove('is-video');
       guestModalExternal.classList.remove('is-visible');
       guestModalExternal.removeAttribute('href');
+      guestContentImage.hidden = true;
+      guestContentImage.removeAttribute('src');
+      guestContentImage.alt = '';
+      guestContentImagePending.hidden = false;
       guestModalEmpty.hidden = false;
       guestModalEmpty.textContent = '項目を選択してください。';
     }
@@ -2072,7 +2209,8 @@
     function showGuestPanel(panelName) {
       const data = guestMedia[activeGuestNumber] || {};
       const sourceUrl = safeWebUrl(data[panelName]);
-      const labels = { story: 'ストーリー', setting: '設定', video: '動画' };
+      const labels = { story: 'ストーリー', setting: '設定' };
+      const contentImageUrl = safeWebUrl(data[`${panelName}Image`] || activeGuestFallbackImage);
 
       guestModalTabs.forEach((tab) => {
         tab.setAttribute('aria-selected', String(tab.dataset.guestPanel === panelName));
@@ -2080,9 +2218,19 @@
       guestModalContent.hidden = false;
       guestModalFrame.src = 'about:blank';
       guestModalFrame.hidden = true;
-      guestModalFrame.classList.toggle('is-video', panelName === 'video');
       guestModalExternal.classList.remove('is-visible');
       guestModalExternal.removeAttribute('href');
+
+      if (contentImageUrl) {
+        guestContentImage.src = contentImageUrl;
+        guestContentImage.alt = `${guestModalTitle.textContent} ${labels[panelName]}イメージ`;
+        guestContentImage.hidden = false;
+        guestContentImagePending.hidden = true;
+      } else {
+        guestContentImage.hidden = true;
+        guestContentImage.removeAttribute('src');
+        guestContentImagePending.hidden = false;
+      }
 
       if (!sourceUrl) {
         guestModalEmpty.hidden = false;
@@ -2090,35 +2238,78 @@
         return;
       }
 
-      const embedUrl = panelName === 'video' ? toYouTubeEmbedUrl(sourceUrl) : toNoteEmbedUrl(sourceUrl);
+      const embedUrl = toNoteEmbedUrl(sourceUrl);
       guestModalEmpty.hidden = true;
       guestModalFrame.title = `${guestModalTitle.textContent} ${labels[panelName]}`;
       guestModalFrame.src = embedUrl;
       guestModalFrame.hidden = false;
       guestModalExternal.href = sourceUrl;
-      guestModalExternal.textContent = panelName === 'video' ? 'YouTubeで開く' : 'noteで開く';
+      guestModalExternal.textContent = 'noteで開く';
       guestModalExternal.classList.add('is-visible');
+    }
+
+    function pauseGuestVideo() {
+      if (guestModalVideo.hidden || !guestModalVideo.contentWindow) return;
+      guestModalVideo.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'pauseVideo',
+        args: []
+      }), '*');
+    }
+
+    function stopGuestAudio(clearSource = false) {
+      guestAudioPlayer.pause();
+      guestAudioButton.classList.remove('is-playing');
+      guestAudioButton.setAttribute('aria-pressed', 'false');
+      if (clearSource) {
+        guestAudioPlayer.removeAttribute('src');
+        guestAudioPlayer.load();
+      }
+    }
+
+    function configureGuestMedia(data, name) {
+      const videoUrl = toYouTubeEmbedUrl(data.video);
+      const posterUrl = safeWebUrl(data.videoPoster || activeGuestFallbackImage);
+      const audioUrl = safeWebUrl(data.audio);
+
+      guestModalVideo.src = videoUrl || 'about:blank';
+      guestModalVideo.title = `${name} 動画`;
+      guestModalVideo.hidden = !videoUrl;
+      guestVideoPending.hidden = Boolean(videoUrl);
+
+      if (videoUrl) {
+        guestModalPoster.hidden = true;
+        guestModalPoster.removeAttribute('src');
+      } else if (posterUrl) {
+        guestModalPoster.src = posterUrl;
+        guestModalPoster.alt = `${name} キービジュアル`;
+        guestModalPoster.hidden = false;
+      } else {
+        guestModalPoster.hidden = true;
+        guestModalPoster.removeAttribute('src');
+        guestModalPoster.alt = '';
+      }
+
+      stopGuestAudio(true);
+      guestAudioButton.disabled = !audioUrl;
+      guestAudioButtonLabel.textContent = audioUrl ? '音源のみ再生' : '音源準備中';
+      if (audioUrl) {
+        guestAudioPlayer.src = audioUrl;
+        guestAudioPlayer.load();
+      }
     }
 
     function openGuestModal(card) {
       const name = card.querySelector('.guest-name')?.textContent.trim() || 'Guest Artist';
       const image = card.querySelector('.guest-avatar img');
       activeGuestNumber = card.dataset.no || '';
+      activeGuestFallbackImage = image ? (image.currentSrc || image.src) : '';
       lastGuestTrigger = card;
       guestModalTitle.textContent = name;
       guestModalLabel.textContent = `GUEST ${activeGuestNumber} / ANOTHER STORY`;
 
-      if (image) {
-        guestModalImage.src = image.currentSrc || image.src;
-        guestModalImage.alt = `${name} キービジュアル`;
-        guestModalVisual.classList.remove('is-pending');
-      } else {
-        guestModalImage.removeAttribute('src');
-        guestModalImage.alt = '';
-        guestModalVisual.classList.add('is-pending');
-      }
-
       resetGuestPanel();
+      configureGuestMedia(guestMedia[activeGuestNumber] || {}, name);
       guestModal.hidden = false;
       document.body.classList.add('modal-open');
       requestAnimationFrame(() => {
@@ -2130,6 +2321,8 @@
     function closeGuestModal() {
       if (guestModal.hidden) return;
       guestModal.classList.remove('is-open');
+      stopGuestAudio(true);
+      guestModalVideo.src = 'about:blank';
       guestModalFrame.src = 'about:blank';
       document.body.classList.remove('modal-open');
       window.setTimeout(() => {
@@ -2137,6 +2330,38 @@
         if (lastGuestTrigger) lastGuestTrigger.focus();
       }, 180);
     }
+
+    guestAudioButton.addEventListener('click', async () => {
+      if (guestAudioButton.disabled) return;
+      if (guestAudioPlayer.paused) {
+        pauseGuestVideo();
+        try {
+          await guestAudioPlayer.play();
+        } catch (_) {
+          guestAudioButtonLabel.textContent = '再生できませんでした';
+        }
+      } else {
+        guestAudioPlayer.pause();
+      }
+    });
+
+    guestAudioPlayer.addEventListener('play', () => {
+      guestAudioButton.classList.add('is-playing');
+      guestAudioButton.setAttribute('aria-pressed', 'true');
+      guestAudioButtonLabel.textContent = '音源を一時停止';
+    });
+
+    guestAudioPlayer.addEventListener('pause', () => {
+      guestAudioButton.classList.remove('is-playing');
+      guestAudioButton.setAttribute('aria-pressed', 'false');
+      if (guestAudioPlayer.getAttribute('src')) guestAudioButtonLabel.textContent = '音源のみ再生';
+    });
+
+    guestAudioPlayer.addEventListener('ended', () => {
+      guestAudioButton.classList.remove('is-playing');
+      guestAudioButton.setAttribute('aria-pressed', 'false');
+      guestAudioButtonLabel.textContent = 'もう一度再生';
+    });
 
     guestCards.forEach((card) => {
       const name = card.querySelector('.guest-name')?.textContent.trim() || '参加アーティスト';

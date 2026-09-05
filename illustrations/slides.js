@@ -1,0 +1,1 @@
+window.illustrationSlides = ["illustrations/character_achan_visual.jpg", "illustrations/character_key_visual_poster.jpg", "illustrations/character_lua_visual.jpg", "illustrations/character_mimi_visual.jpg", "illustrations/hero_theatrical_visual.jpg"];

@@ -1534,7 +1534,7 @@
     .guest-modal.is-open .guest-modal-dialog { transform: translateY(0) scale(1); }
     .guest-modal-close {
       position: sticky;
-      z-index: 4;
+      z-index: 6;
       top: 14px;
       float: right;
       width: 44px;
@@ -1836,7 +1836,20 @@
       .guest-link-list { grid-template-columns: 1fr; min-height: 280px; padding: 24px 18px; }
     }
 
-    .guest-reading-toolbar { position: sticky; top: 0; z-index: 3; background: #0b0c18; padding: 8px 0; }
+    .guest-modal-inner { padding-top: 0; }
+    .guest-modal-header { padding-top: clamp(22px,4vw,48px); }
+    .guest-reading-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      margin-right: calc(-1 * clamp(22px,4vw,48px));
+      margin-left: calc(-1 * clamp(22px,4vw,48px));
+      padding: 10px clamp(62px,5vw,72px) 10px clamp(22px,4vw,48px);
+      border-bottom: 1px solid rgba(255,255,255,.14);
+      background: rgba(5,6,18,.97);
+      box-shadow: 0 10px 28px rgba(0,0,0,.34);
+      backdrop-filter: blur(14px);
+    }
     .guest-reading-toolbar .guest-media-controls { margin: 0; }
     .guest-reading-toolbar .guest-modal-tabs { margin: 8px 0 0; }
     .guest-modal-frame.is-reader { height: 800px; }
@@ -1852,7 +1865,13 @@
       .guest-image-expand { inset: 0; background: transparent; font-size: 0; border: 0; }
       .guest-image-expand::after { content: '拡大'; position: absolute; bottom: 4px; right: 4px; background: #080914dd; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
       .guest-reading-toolbar .guest-media-help { display: none; }
-      .guest-reading-toolbar { padding-right: 42px; }
+      .guest-modal-inner { padding-top: 0; }
+      .guest-modal-header { padding-top: 20px; }
+      .guest-reading-toolbar {
+        margin-right: -14px;
+        margin-left: -14px;
+        padding: 8px 58px 8px 14px;
+      }
     }
     #intro .section-head { grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
     #intro .section-title { font-size: clamp(28px, 5.5vw, 72px); overflow-wrap: anywhere; }
@@ -2182,13 +2201,11 @@
         </div>
         <div class="guest-reading-toolbar">
           <div class="guest-media-controls">
-            <button class="guest-audio-button" id="guestAudioButton" type="button" disabled>
-              <span class="guest-audio-icon" aria-hidden="true">♪</span>
-              <span id="guestAudioButtonLabel">音源のみ再生</span>
+            <button class="guest-audio-button" id="guestVideoToggle" type="button" aria-pressed="false" disabled>
+              <span class="guest-audio-icon" id="guestVideoToggleIcon" aria-hidden="true">▶</span>
+              <span id="guestVideoToggleLabel">YouTubeを再生</span>
             </button>
-            <audio id="guestAudioPlayer" preload="metadata"></audio>
-            <button class="guest-audio-button" id="guestVideoPause" type="button" hidden>動画を一時停止</button>
-            <span class="guest-media-help">曲を流したまま、物語・設定・リンク集を開けます。</span>
+            <span class="guest-media-help">YouTubeをループ再生しながら、物語・設定・リンク集を開けます。</span>
           </div>
         <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
@@ -2276,7 +2293,6 @@
       /*
         "01": {
           video: "https://youtu.be/...",
-          audio: "https://example.com/song.mp3",
           story: "https://note.com/...",
           storyExternal: "https://note.com/...",
           storyImage: "<story-image-path>",
@@ -2300,9 +2316,9 @@
     const guestModalPoster = document.querySelector('#guestModalPoster');
     const guestModalVideo = document.querySelector('#guestModalVideo');
     const guestVideoPending = document.querySelector('#guestVideoPending');
-    const guestAudioButton = document.querySelector('#guestAudioButton');
-    const guestAudioButtonLabel = document.querySelector('#guestAudioButtonLabel');
-    const guestAudioPlayer = document.querySelector('#guestAudioPlayer');
+    const guestVideoToggleButton = document.querySelector('#guestVideoToggle');
+    const guestVideoToggleLabel = document.querySelector('#guestVideoToggleLabel');
+    const guestVideoToggleIcon = document.querySelector('#guestVideoToggleIcon');
     const guestModalContent = document.querySelector('#guestModalContent');
     const guestContentImage = document.querySelector('#guestContentImage');
     const guestContentImagePending = document.querySelector('#guestContentImagePending');
@@ -2313,8 +2329,6 @@
     const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
     const guestCards = [...document.querySelectorAll('.guest-card')];
     const imageDialog = document.querySelector('#guestImageDialog');
-    const videoPauseButton = document.querySelector('#guestVideoPause');
-    videoPauseButton.addEventListener('click', pauseGuestVideo);
     document.querySelector('.guest-image-expand').addEventListener('click', () => {
       if (guestContentImage.hidden) return;
       const image = imageDialog.querySelector('img');
@@ -2382,7 +2396,7 @@
       }
 
       return /^[a-zA-Z0-9_-]{6,}$/.test(videoId)
-        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0&enablejsapi=1&playsinline=1`
+        ? `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?rel=0&enablejsapi=1&playsinline=1&loop=1&playlist=${encodeURIComponent(videoId)}`
         : safeUrl;
     }
 
@@ -2488,35 +2502,41 @@
       }
     }
 
-    function pauseGuestVideo() {
-      if (guestModalVideo.hidden || !guestModalVideo.contentWindow) return;
-      guestModalVideo.contentWindow.postMessage(JSON.stringify({
-        event: 'command',
-        func: 'pauseVideo',
-        args: []
-      }), '*');
+    let guestVideoPlaying = false;
+
+    function setGuestVideoPlaying(isPlaying) {
+      guestVideoPlaying = Boolean(isPlaying);
+      guestVideoToggleButton.classList.toggle('is-playing', guestVideoPlaying);
+      guestVideoToggleButton.setAttribute('aria-pressed', String(guestVideoPlaying));
+      guestVideoToggleIcon.textContent = guestVideoPlaying ? 'Ⅱ' : '▶';
+      guestVideoToggleLabel.textContent = guestVideoPlaying ? 'YouTubeを一時停止' : 'YouTubeを再生';
     }
 
-    function stopGuestAudio(clearSource = false) {
-      guestAudioPlayer.pause();
-      guestAudioButton.classList.remove('is-playing');
-      guestAudioButton.setAttribute('aria-pressed', 'false');
-      if (clearSource) {
-        guestAudioPlayer.removeAttribute('src');
-        guestAudioPlayer.load();
-      }
+    function sendGuestVideoCommand(command) {
+      if (guestModalVideo.hidden || !guestModalVideo.contentWindow) return false;
+      guestModalVideo.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: command,
+        args: []
+      }), '*');
+      return true;
+    }
+
+    function pauseGuestVideo() {
+      if (sendGuestVideoCommand('pauseVideo')) setGuestVideoPlaying(false);
     }
 
     function configureGuestMedia(data, name) {
       const videoUrl = toYouTubeEmbedUrl(data.video);
       const posterUrl = safeWebUrl(data.videoPoster || activeGuestFallbackImage);
-      const audioUrl = safeWebUrl(data.audio);
 
       guestModalVideo.src = videoUrl || 'about:blank';
       guestModalVideo.title = `${name} 動画`;
       guestModalVideo.hidden = !videoUrl;
-      videoPauseButton.hidden = !videoUrl;
       guestVideoPending.hidden = Boolean(videoUrl);
+      guestVideoToggleButton.disabled = !videoUrl;
+      setGuestVideoPlaying(false);
+      if (!videoUrl) guestVideoToggleLabel.textContent = '動画準備中';
 
       if (videoUrl) {
         guestModalPoster.hidden = true;
@@ -2531,13 +2551,6 @@
         guestModalPoster.alt = '';
       }
 
-      stopGuestAudio(true);
-      guestAudioButton.disabled = !audioUrl;
-      guestAudioButtonLabel.textContent = audioUrl ? '音源のみ再生' : '音源準備中';
-      if (audioUrl) {
-        guestAudioPlayer.src = audioUrl;
-        guestAudioPlayer.load();
-      }
     }
 
     function openGuestModal(card) {
@@ -2565,7 +2578,7 @@
     function closeGuestModal() {
       if (guestModal.hidden) return;
       guestModal.classList.remove('is-open');
-      stopGuestAudio(true);
+      pauseGuestVideo();
       guestModalVideo.src = 'about:blank';
       guestModalFrame.src = 'about:blank';
       document.body.classList.remove('modal-open');
@@ -2575,36 +2588,31 @@
       }, 180);
     }
 
-    guestAudioButton.addEventListener('click', async () => {
-      if (guestAudioButton.disabled) return;
-      if (guestAudioPlayer.paused) {
-        pauseGuestVideo();
-        try {
-          await guestAudioPlayer.play();
-        } catch (_) {
-          guestAudioButtonLabel.textContent = '再生できませんでした';
-        }
-      } else {
-        guestAudioPlayer.pause();
+    guestVideoToggleButton.addEventListener('click', () => {
+      if (guestVideoToggleButton.disabled) return;
+      const nextPlaying = !guestVideoPlaying;
+      if (sendGuestVideoCommand(nextPlaying ? 'playVideo' : 'pauseVideo')) {
+        setGuestVideoPlaying(nextPlaying);
       }
     });
 
-    guestAudioPlayer.addEventListener('play', () => {
-      guestAudioButton.classList.add('is-playing');
-      guestAudioButton.setAttribute('aria-pressed', 'true');
-      guestAudioButtonLabel.textContent = '音源を一時停止';
+    guestModalVideo.addEventListener('load', () => {
+      setGuestVideoPlaying(false);
+      if (guestModalVideo.src === 'about:blank') return;
+      guestModalVideo.contentWindow?.postMessage(JSON.stringify({
+        event: 'listening',
+        id: 'guestModalVideo'
+      }), '*');
     });
 
-    guestAudioPlayer.addEventListener('pause', () => {
-      guestAudioButton.classList.remove('is-playing');
-      guestAudioButton.setAttribute('aria-pressed', 'false');
-      if (guestAudioPlayer.getAttribute('src')) guestAudioButtonLabel.textContent = '音源のみ再生';
-    });
-
-    guestAudioPlayer.addEventListener('ended', () => {
-      guestAudioButton.classList.remove('is-playing');
-      guestAudioButton.setAttribute('aria-pressed', 'false');
-      guestAudioButtonLabel.textContent = 'もう一度再生';
+    window.addEventListener('message', (event) => {
+      if (!['https://www.youtube.com', 'https://www.youtube-nocookie.com'].includes(event.origin)) return;
+      try {
+        const message = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        const playerState = message?.info?.playerState;
+        if (playerState === 1) setGuestVideoPlaying(true);
+        if (playerState === 0 || playerState === 2) setGuestVideoPlaying(false);
+      } catch (_) { /* Ignore unrelated messages from the embedded player. */ }
     });
 
     guestCards.forEach((card) => {

@@ -1594,6 +1594,8 @@
       border: 0;
     }
     .guest-modal-video { z-index: 2; background: #000; }
+    .guest-modal-video-stage.is-x { height: min(72svh, 720px); aspect-ratio: auto; }
+    .guest-modal-video.is-x { background: #fff; }
     .guest-modal-poster { object-fit: contain; background: rgba(0,0,0,.22); }
     .guest-modal-poster[hidden],
     .guest-modal-video[hidden] { display: none; }
@@ -1842,8 +1844,8 @@
       position: sticky;
       top: 0;
       z-index: 5;
-      margin-right: calc(-1 * clamp(22px,4vw,48px));
-      margin-left: calc(-1 * clamp(22px,4vw,48px));
+      width: 100%;
+      margin: 0;
       padding: 10px clamp(62px,5vw,72px) 10px clamp(22px,4vw,48px);
       border-bottom: 1px solid rgba(255,255,255,.14);
       background: rgba(5,6,18,.97);
@@ -1868,8 +1870,7 @@
       .guest-modal-inner { padding-top: 0; }
       .guest-modal-header { padding-top: 20px; }
       .guest-reading-toolbar {
-        margin-right: -14px;
-        margin-left: -14px;
+        margin: 0;
         padding: 8px 58px 8px 14px;
       }
     }
@@ -2199,6 +2200,7 @@
             <span class="guest-video-pending" id="guestVideoPending">VIDEO COMING SOON</span>
           </div>
         </div>
+      </div>
         <div class="guest-reading-toolbar">
           <div class="guest-media-controls">
             <button class="guest-audio-button" id="guestVideoToggle" type="button" aria-pressed="false" disabled>
@@ -2213,6 +2215,7 @@
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="links">リンク集</button>
         </div>
         </div>
+      <div class="guest-modal-inner guest-modal-body">
         <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
           <div class="guest-content-grid">
             <figure class="guest-content-visual">
@@ -2222,7 +2225,7 @@
             </figure>
             <div class="guest-content-reader">
               <div class="guest-modal-empty" id="guestModalEmpty">項目を選択してください。</div>
-              <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
+              <iframe class="guest-modal-frame" id="guestModalFrame" title="参加作品コンテンツ" loading="eager" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
               <div class="guest-link-list" id="guestLinkList" aria-label="公式リンク" hidden></div>
               <a class="guest-modal-external" id="guestModalExternal" href="#" target="_blank" rel="noopener noreferrer">noteで開く</a>
             </div>
@@ -2292,6 +2295,7 @@
       }
       /*
         "01": {
+          // YouTubeまたはXの動画ポストURL
           video: "https://youtu.be/...",
           story: "https://note.com/...",
           storyExternal: "https://note.com/...",
@@ -2341,6 +2345,10 @@
     let readerResizeObserver;
     guestModalFrame.addEventListener('load', () => {
       readerResizeObserver?.disconnect();
+      if (guestModalFrame.src !== 'about:blank') {
+        guestModalFrame.dataset.ready = 'true';
+        guestModalEmpty.hidden = true;
+      }
       if (!guestModalFrame.classList.contains('is-reader')) {
         guestModalFrame.style.removeProperty('height');
         return;
@@ -2357,6 +2365,8 @@
     let activeGuestNumber = '';
     let activeGuestFallbackImage = '';
     let lastGuestTrigger = null;
+    let guestCloseTimer = 0;
+    let guestPanelLoadAttempt = 0;
 
     function safeWebUrl(value) {
       if (!value) return '';
@@ -2400,11 +2410,35 @@
         : safeUrl;
     }
 
+    function toVideoEmbed(value) {
+      const safeUrl = safeWebUrl(value);
+      if (!safeUrl) return { url: '', provider: '' };
+      const youtubeUrl = toYouTubeEmbedUrl(safeUrl);
+      if (/youtube-nocookie\.com\/embed\//i.test(youtubeUrl)) {
+        return { url: youtubeUrl, provider: 'youtube' };
+      }
+      const url = new URL(safeUrl);
+      const host = url.hostname.replace(/^www\./, '').toLowerCase();
+      if (['x.com', 'twitter.com', 'mobile.twitter.com'].includes(host)) {
+        const parts = url.pathname.split('/').filter(Boolean);
+        const statusIndex = parts.findIndex((part) => part === 'status');
+        const postId = statusIndex >= 0 ? parts[statusIndex + 1] : '';
+        if (/^\d+$/.test(postId)) {
+          return {
+            url: `https://platform.twitter.com/embed/Tweet.html?id=${encodeURIComponent(postId)}&dnt=true&theme=dark`,
+            provider: 'x'
+          };
+        }
+      }
+      return { url: safeUrl, provider: 'external' };
+    }
+
     function resetGuestPanel() {
       guestModalTabs.forEach((tab) => tab.setAttribute('aria-selected', 'false'));
       guestModalContent.hidden = true;
       guestModalFrame.hidden = true;
       guestModalFrame.src = 'about:blank';
+      guestModalFrame.dataset.ready = 'false';
       guestModalFrame.classList.remove('is-note', 'is-reader');
       guestLinkList.hidden = true;
       guestLinkList.replaceChildren();
@@ -2489,12 +2523,20 @@
       const sourceHost = sourceObject.hostname;
       const isNote = /(^|\.)note\.com$/i.test(sourceHost);
       const isReader = /\/3sync_assets\/[^/]+\.html$/i.test(sourceObject.pathname);
-      guestModalEmpty.hidden = true;
+      const loadAttempt = ++guestPanelLoadAttempt;
+      guestModalFrame.dataset.ready = 'false';
+      guestModalEmpty.hidden = false;
+      guestModalEmpty.textContent = `${labels[panelName]}を読み込んでいます…`;
       guestModalFrame.title = `${guestModalTitle.textContent} ${labels[panelName]}`;
       guestModalFrame.classList.toggle('is-note', isNote);
       guestModalFrame.classList.toggle('is-reader', isReader);
       guestModalFrame.src = embedUrl;
       guestModalFrame.hidden = false;
+      window.setTimeout(() => {
+        if (loadAttempt !== guestPanelLoadAttempt || guestModalFrame.dataset.ready === 'true') return;
+        guestModalEmpty.hidden = false;
+        guestModalEmpty.textContent = '読み込みに時間がかかっています。選択中のタブをもう一度押すと再読み込みできます。';
+      }, 7000);
       if (externalUrl) {
         guestModalExternal.href = externalUrl;
         guestModalExternal.textContent = (isNote || isReader) ? 'noteで原文を読む' : '別ページで開く';
@@ -2503,17 +2545,22 @@
     }
 
     let guestVideoPlaying = false;
+    let activeVideoProvider = '';
 
     function setGuestVideoPlaying(isPlaying) {
       guestVideoPlaying = Boolean(isPlaying);
       guestVideoToggleButton.classList.toggle('is-playing', guestVideoPlaying);
       guestVideoToggleButton.setAttribute('aria-pressed', String(guestVideoPlaying));
+      if (activeVideoProvider !== 'youtube') {
+        guestVideoToggleIcon.textContent = '▶';
+        return;
+      }
       guestVideoToggleIcon.textContent = guestVideoPlaying ? 'Ⅱ' : '▶';
       guestVideoToggleLabel.textContent = guestVideoPlaying ? 'YouTubeを一時停止' : 'YouTubeを再生';
     }
 
     function sendGuestVideoCommand(command) {
-      if (guestModalVideo.hidden || !guestModalVideo.contentWindow) return false;
+      if (activeVideoProvider !== 'youtube' || guestModalVideo.hidden || !guestModalVideo.contentWindow) return false;
       guestModalVideo.contentWindow.postMessage(JSON.stringify({
         event: 'command',
         func: command,
@@ -2527,16 +2574,22 @@
     }
 
     function configureGuestMedia(data, name) {
-      const videoUrl = toYouTubeEmbedUrl(data.video);
+      const videoEmbed = toVideoEmbed(data.video);
+      const videoUrl = videoEmbed.url;
       const posterUrl = safeWebUrl(data.videoPoster || activeGuestFallbackImage);
+      activeVideoProvider = videoEmbed.provider;
 
       guestModalVideo.src = videoUrl || 'about:blank';
-      guestModalVideo.title = `${name} 動画`;
+      guestModalVideo.title = activeVideoProvider === 'x' ? `${name} X動画ポスト` : `${name} 動画`;
       guestModalVideo.hidden = !videoUrl;
+      guestModalVideo.classList.toggle('is-x', activeVideoProvider === 'x');
+      guestModalVideo.parentElement.classList.toggle('is-x', activeVideoProvider === 'x');
       guestVideoPending.hidden = Boolean(videoUrl);
-      guestVideoToggleButton.disabled = !videoUrl;
+      guestVideoToggleButton.disabled = activeVideoProvider !== 'youtube';
       setGuestVideoPlaying(false);
       if (!videoUrl) guestVideoToggleLabel.textContent = '動画準備中';
+      if (activeVideoProvider === 'x') guestVideoToggleLabel.textContent = 'X投稿内で再生';
+      if (activeVideoProvider === 'external') guestVideoToggleLabel.textContent = '埋め込み内で再生';
 
       if (videoUrl) {
         guestModalPoster.hidden = true;
@@ -2566,11 +2619,12 @@
 
       resetGuestPanel();
       configureGuestMedia(guestMedia[activeGuestNumber] || {}, name);
-      showGuestPanel('story');
+      window.clearTimeout(guestCloseTimer);
       guestModal.hidden = false;
       document.body.classList.add('modal-open');
       requestAnimationFrame(() => {
         guestModal.classList.add('is-open');
+        showGuestPanel('story');
         guestModal.querySelector('.guest-modal-close').focus();
       });
     }
@@ -2582,7 +2636,7 @@
       guestModalVideo.src = 'about:blank';
       guestModalFrame.src = 'about:blank';
       document.body.classList.remove('modal-open');
-      window.setTimeout(() => {
+      guestCloseTimer = window.setTimeout(() => {
         guestModal.hidden = true;
         if (lastGuestTrigger) lastGuestTrigger.focus();
       }, 180);

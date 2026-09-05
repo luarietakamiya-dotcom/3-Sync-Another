@@ -1836,6 +1836,33 @@
       .guest-link-list { grid-template-columns: 1fr; min-height: 280px; padding: 24px 18px; }
     }
 
+    .guest-reading-toolbar { position: sticky; top: 0; z-index: 3; background: #0b0c18; padding: 8px 0; }
+    .guest-reading-toolbar .guest-media-controls { margin: 0; }
+    .guest-reading-toolbar .guest-modal-tabs { margin: 8px 0 0; }
+    .guest-modal-frame.is-reader { height: 800px; }
+    .guest-content-visual { margin: 0; }
+    .guest-image-expand { position: absolute; bottom: 8px; right: 8px; padding: 10px 14px; border: 1px solid #888; border-radius: 8px; background: #101020e8; color: white; cursor: pointer; }
+    .guest-content-visual:has(.guest-content-image[hidden]) .guest-image-expand { display: none; }
+    .guest-image-dialog { width: min(94vw, 1100px); max-height: 94svh; padding: 48px 12px 12px; border: 1px solid #777; border-radius: 12px; background: #080914; color: white; }
+    .guest-image-dialog::backdrop { background: #000c; }
+    .guest-image-dialog img { display: block; max-width: 100%; max-height: 78svh; object-fit: contain; margin: auto; }
+    .guest-image-dialog button { position: absolute; right: 8px; top: 4px; width: 44px; height: 44px; background: transparent; color: white; border: 0; font-size: 28px; cursor: pointer; }
+    @media (max-width: 640px) {
+      .guest-content-visual { width: 120px; height: 120px; aspect-ratio: 1; margin: 12px; }
+      .guest-image-expand { inset: 0; background: transparent; font-size: 0; border: 0; }
+      .guest-image-expand::after { content: '拡大'; position: absolute; bottom: 4px; right: 4px; background: #080914dd; padding: 4px 8px; border-radius: 4px; font-size: 12px; }
+      .guest-reading-toolbar .guest-media-help { display: none; }
+      .guest-reading-toolbar { padding-right: 42px; }
+    }
+    #intro .section-head { grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+    #intro .section-title { font-size: clamp(28px, 5.5vw, 72px); overflow-wrap: anywhere; }
+    #intro .section-lead { max-width: none; margin: 0; }
+    .illustration-gallery { overflow: hidden; min-width: 0; background: #080b18; display: flex; flex-direction: column; }
+    .illustration-stage { min-height: 320px; flex: 1; position: relative; }
+    .illustration-stage img { position: absolute; width: 100%; height: 100%; object-fit: contain; }
+    .illustration-controls { display: flex; justify-content: center; align-items: center; gap: 16px; padding: 8px; }
+    .illustration-controls button { min-width: 44px; min-height: 44px; color: white; background: #20263e; border: 1px solid #566080; border-radius: 8px; cursor: pointer; }
+    @media (max-width: 640px) { .illustration-stage { min-height: 260px; } }
   </style>
 </head>
 <body>
@@ -1884,7 +1911,7 @@
           </div>
         </div>
         <div class="visual-card reveal" aria-label="メインキービジュアル">
-          <img src="3sync_assets/hero_theatrical_visual.jpg" alt="劇場版3-Sync -Another Stories- HEROキービジュアル" />
+          <img src="illustrations/hero_theatrical_visual.jpg" alt="劇場版3-Sync -Another Stories- HEROキービジュアル" />
           <div class="visual-badge">HERO KEY VISUAL</div>
         </div>
       </div>
@@ -1936,17 +1963,13 @@
             <p>本編では描かれなかった視点。語られることのなかった感情。別々の場所で鳴っていた音が、ひとつの劇場へ集まっていく。</p>
             <p>これは、もうひとつの3-Sync。そして、あなたの音が物語になる日。</p>
           </div>
-          <div class="panel tag-wall" aria-label="キーワード">
-            <div class="tag-cloud">
-              <span class="tag">YODEL PARTICLE</span>
-              <span class="tag">NOISE</span>
-              <span class="tag">SHIN-MITAMA CITY</span>
-              <span class="tag">ANOTHER STORIES</span>
-              <span class="tag">AI MUSIC</span>
-              <span class="tag">GUEST ARTISTS</span>
-              <span class="tag">THEATER EVENT</span>
-              <span class="tag">3-SYNC</span>
-              <span class="tag">SOUND × STORY</span>
+          <div class="panel illustration-gallery" aria-label="イラストスライドショー">
+            <div class="illustration-stage"><img id="illustrationSlide" src="illustrations/hero_theatrical_visual.jpg" alt="3-Sync イラスト" loading="lazy"></div>
+            <div class="illustration-controls">
+              <button type="button" id="illustrationPrev" aria-label="前のイラスト">←</button>
+              <span id="illustrationCount">1 / 2</span>
+              <button type="button" id="illustrationPause" aria-pressed="false">一時停止</button>
+              <button type="button" id="illustrationNext" aria-label="次のイラスト">→</button>
             </div>
           </div>
         </div>
@@ -2011,9 +2034,9 @@
           <p class="section-lead">物語の中心を担う3人。カードから小説・設定・映像を開けます。</p>
         </div>
         <div class="guest-grid guest-grid--sync">
-          <article class="panel guest-card sync-card" data-no="LUA" data-key="sync-luarie" data-group="sync"><span class="guest-role">3-SYNC / LUA</span><div class="guest-avatar"><img src="3sync_assets/member_luarie.png" alt="ルアリエ アイコン"></div><h3 class="guest-name">ルアリエ</h3><p class="guest-track"><span>Story：</span>Another Stories</p></article>
-          <article class="panel guest-card sync-card" data-no="MIMI" data-key="sync-mimi" data-group="sync"><span class="guest-role">3-SYNC / MIMI</span><div class="guest-avatar"><img src="3sync_assets/character_mimi_visual.jpg" alt="夜凪ミミ アイコン"></div><h3 class="guest-name">夜凪ミミ</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
-          <article class="panel guest-card sync-card" data-no="A" data-key="sync-achan" data-group="sync"><span class="guest-role">3-SYNC / A-CHAN</span><div class="guest-avatar"><img src="3sync_assets/character_achan_visual.jpg" alt="えーちゃん アイコン"></div><h3 class="guest-name">えーちゃん</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
+          <article class="panel guest-card sync-card" data-no="LUA" data-key="sync-luarie" data-group="sync"><span class="guest-role">3-SYNC / LUA</span><div class="guest-avatar"><img src="icons/character_lua_visual.jpg" alt="ルアリエ アイコン"></div><h3 class="guest-name">ルアリエ</h3><p class="guest-track"><span>Story：</span>Another Stories</p></article>
+          <article class="panel guest-card sync-card" data-no="MIMI" data-key="sync-mimi" data-group="sync"><span class="guest-role">3-SYNC / MIMI</span><div class="guest-avatar"><img src="icons/character_mimi_visual.jpg" alt="夜凪ミミ アイコン"></div><h3 class="guest-name">夜凪ミミ</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
+          <article class="panel guest-card sync-card" data-no="A" data-key="sync-achan" data-group="sync"><span class="guest-role">3-SYNC / A-CHAN</span><div class="guest-avatar"><img src="icons/character_achan_visual.jpg" alt="えーちゃん アイコン"></div><h3 class="guest-name">えーちゃん</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
         </div>
         <div class="section-head">
           <div>
@@ -2023,25 +2046,25 @@
           <p class="section-lead">19組のアーティストが、それぞれの音楽で“Another Story”を描く。</p>
         </div>
         <div class="guest-grid">
-          <article class="panel guest-card" data-no="01"><span class="guest-role">GUEST 01</span><div class="guest-avatar"><img src="3sync_assets/guest_catbeat.png" alt="CatBeat / GABu アイコン"></div><h3 class="guest-name">CatBeat / GABu</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="02"><span class="guest-role">GUEST 02</span><div class="guest-avatar"><img src="3sync_assets/guest_daiten.png" alt="Daiten アイコン"></div><h3 class="guest-name">Daiten</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="03"><span class="guest-role">GUEST 03</span><div class="guest-avatar"><img src="3sync_assets/guest_katsunn.jpeg" alt="Katsunn アイコン"></div><h3 class="guest-name">Katsunn</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="04"><span class="guest-role">GUEST 04</span><div class="guest-avatar"><img src="3sync_assets/guest_makotang.jpg" alt="Makotang アイコン"></div><h3 class="guest-name">Makotang</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="05"><span class="guest-role">GUEST 05</span><div class="guest-avatar"><img src="3sync_assets/guest_makotoai.png" alt="MakotoAI アイコン"></div><h3 class="guest-name">MakotoAI</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="06"><span class="guest-role">GUEST 06</span><div class="guest-avatar"><img src="3sync_assets/guest_mogu.png" alt="MOGU アイコン"></div><h3 class="guest-name">MOGU</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="07"><span class="guest-role">GUEST 07</span><div class="guest-avatar"><img src="3sync_assets/guest_nue.jpg" alt="nue~鵺~ アイコン"></div><h3 class="guest-name">nue~鵺~</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="08"><span class="guest-role">GUEST 08</span><div class="guest-avatar"><img src="3sync_assets/guest_varts.png" alt="rui｜∫varts アイコン"></div><h3 class="guest-name">rui｜∫varts</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="09"><span class="guest-role">GUEST 09</span><div class="guest-avatar"><img src="3sync_assets/guest_ruke.jpeg" alt="Ruke アイコン"></div><h3 class="guest-name">Ruke</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="10"><span class="guest-role">GUEST 10</span><div class="guest-avatar"><img src="3sync_assets/guest_to.png" alt="To アイコン"></div><h3 class="guest-name">To</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="11"><span class="guest-role">GUEST 11</span><div class="guest-avatar"><img src="3sync_assets/guest_uta.jpeg" alt="Uta-Journey アイコン"></div><h3 class="guest-name">Uta-Journey</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="12"><span class="guest-role">GUEST 12</span><div class="guest-avatar"><img src="3sync_assets/guest_new_world.png" alt="新しい世界 アイコン"></div><h3 class="guest-name">新しい世界</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="13"><span class="guest-role">GUEST 13</span><div class="guest-avatar"><img src="3sync_assets/guest_aki.png" alt="アキ アイコン"></div><h3 class="guest-name">アキ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="14"><span class="guest-role">GUEST 14</span><div class="guest-avatar"><img src="3sync_assets/guest_gin.jpg" alt="銀-GIN- アイコン"></div><h3 class="guest-name">銀-GIN-</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="15"><span class="guest-role">GUEST 15</span><div class="guest-avatar"><img src="3sync_assets/guest_blanchesca.png" alt="ブランシェスカ アイコン"></div><h3 class="guest-name">ブランシェスカ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="16"><span class="guest-role">GUEST 16</span><div class="guest-avatar"><img src="3sync_assets/guest_maeno.png" alt="前野凌 アイコン"></div><h3 class="guest-name">前野凌</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="17"><span class="guest-role">GUEST 17</span><div class="guest-avatar"><img src="3sync_assets/guest_soiya.png" alt="南黒山ソイヤ アイコン"></div><h3 class="guest-name">南黒山ソイヤ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="18"><span class="guest-role">GUEST 18</span><div class="guest-avatar"><img src="3sync_assets/guest_memuroiro.png" alt="メムロイロ アイコン"></div><h3 class="guest-name">メムロイロ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
-          <article class="panel guest-card" data-no="19"><span class="guest-role">GUEST 19</span><div class="guest-avatar"><img src="3sync_assets/guest_diva.jpg" alt="Resonance Diva アイコン"></div><h3 class="guest-name">Resonance Diva</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="01"><span class="guest-role">GUEST 01</span><div class="guest-avatar"><img src="icons/guest_catbeat.png" alt="CatBeat / GABu アイコン"></div><h3 class="guest-name">CatBeat / GABu</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="02"><span class="guest-role">GUEST 02</span><div class="guest-avatar"><img src="icons/guest_daiten.png" alt="Daiten アイコン"></div><h3 class="guest-name">Daiten</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="03"><span class="guest-role">GUEST 03</span><div class="guest-avatar"><img src="icons/guest_katsunn.jpeg" alt="Katsunn アイコン"></div><h3 class="guest-name">Katsunn</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="04"><span class="guest-role">GUEST 04</span><div class="guest-avatar"><img src="icons/guest_makotang.jpg" alt="Makotang アイコン"></div><h3 class="guest-name">Makotang</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="05"><span class="guest-role">GUEST 05</span><div class="guest-avatar"><img src="icons/guest_makotoai.png" alt="MakotoAI アイコン"></div><h3 class="guest-name">MakotoAI</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="06"><span class="guest-role">GUEST 06</span><div class="guest-avatar"><img src="icons/guest_mogu.png" alt="MOGU アイコン"></div><h3 class="guest-name">MOGU</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="07"><span class="guest-role">GUEST 07</span><div class="guest-avatar"><img src="icons/guest_nue.jpg" alt="nue~鵺~ アイコン"></div><h3 class="guest-name">nue~鵺~</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="08"><span class="guest-role">GUEST 08</span><div class="guest-avatar"><img src="icons/guest_varts.png" alt="rui｜∫varts アイコン"></div><h3 class="guest-name">rui｜∫varts</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="09"><span class="guest-role">GUEST 09</span><div class="guest-avatar"><img src="icons/guest_ruke.jpeg" alt="Ruke アイコン"></div><h3 class="guest-name">Ruke</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="10"><span class="guest-role">GUEST 10</span><div class="guest-avatar"><img src="icons/guest_to.png" alt="To アイコン"></div><h3 class="guest-name">To</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="11"><span class="guest-role">GUEST 11</span><div class="guest-avatar"><img src="icons/guest_uta.jpeg" alt="Uta-Journey アイコン"></div><h3 class="guest-name">Uta-Journey</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="12"><span class="guest-role">GUEST 12</span><div class="guest-avatar"><img src="icons/guest_new_world.png" alt="新しい世界 アイコン"></div><h3 class="guest-name">新しい世界</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="13"><span class="guest-role">GUEST 13</span><div class="guest-avatar"><img src="icons/guest_aki.png" alt="アキ アイコン"></div><h3 class="guest-name">アキ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="14"><span class="guest-role">GUEST 14</span><div class="guest-avatar"><img src="icons/guest_gin.jpg" alt="銀-GIN- アイコン"></div><h3 class="guest-name">銀-GIN-</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="15"><span class="guest-role">GUEST 15</span><div class="guest-avatar"><img src="icons/guest_blanchesca.png" alt="ブランシェスカ アイコン"></div><h3 class="guest-name">ブランシェスカ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="16"><span class="guest-role">GUEST 16</span><div class="guest-avatar"><img src="icons/guest_maeno.png" alt="前野凌 アイコン"></div><h3 class="guest-name">前野凌</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="17"><span class="guest-role">GUEST 17</span><div class="guest-avatar"><img src="icons/guest_soiya.png" alt="南黒山ソイヤ アイコン"></div><h3 class="guest-name">南黒山ソイヤ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="18"><span class="guest-role">GUEST 18</span><div class="guest-avatar"><img src="icons/guest_memuroiro.png" alt="メムロイロ アイコン"></div><h3 class="guest-name">メムロイロ</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
+          <article class="panel guest-card" data-no="19"><span class="guest-role">GUEST 19</span><div class="guest-avatar"><img src="icons/guest_diva.jpg" alt="Resonance Diva アイコン"></div><h3 class="guest-name">Resonance Diva</h3><p class="guest-track"><span>Track：</span>Coming Soon</p></article>
         </div>
       </div>
     </section>
@@ -2058,7 +2081,7 @@
       </div>
       <article class="character-feature character-feature--mimi">
         <div class="character-feature-inner">
-          <div class="character-feature-image"><img src="3sync_assets/character_mimi_visual.jpg" alt="MIMI キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-image"><img src="illustrations/character_mimi_visual.jpg" alt="MIMI キャラクター紹介キービジュアル"></div>
           <div class="character-feature-copy">
             <span class="character-index">01 / OBSERVER</span>
             <h3><em>MIMI</em><small>夜凪ミミ</small></h3>
@@ -2070,7 +2093,7 @@
       </article>
       <article class="character-feature character-feature--lua">
         <div class="character-feature-inner reverse">
-          <div class="character-feature-image"><img src="3sync_assets/character_lua_visual.jpg" alt="ルアリエ キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-image"><img src="illustrations/character_lua_visual.jpg" alt="ルアリエ キャラクター紹介キービジュアル"></div>
           <div class="character-feature-copy">
             <span class="character-index">02 / HARMONIZER</span>
             <h3><em>ルアリエ</em><small>LUA</small></h3>
@@ -2082,7 +2105,7 @@
       </article>
       <article class="character-feature character-feature--achan">
         <div class="character-feature-inner">
-          <div class="character-feature-image"><img src="3sync_assets/character_achan_visual.jpg" alt="えーちゃん キャラクター紹介キービジュアル"></div>
+          <div class="character-feature-image"><img src="illustrations/character_achan_visual.jpg" alt="えーちゃん キャラクター紹介キービジュアル"></div>
           <div class="character-feature-copy">
             <span class="character-index">03 / SYNC-OPERATOR</span>
             <h3><em>えーちゃん</em><small>A-CHAN</small></h3>
@@ -2131,7 +2154,7 @@
           <dl class="panel credit-list">
             <div class="credit-row"><dt>Title</dt><dd>劇場版3-Sync -Another Stories-</dd></div>
             <div class="credit-row"><dt>Release</dt><dd>2026年10月10日</dd></div>
-            <div class="credit-row"><dt>Planning</dt><dd>Celestial Pulse Line</dd></div>
+            <div class="credit-row"><dt>Planning</dt><dd>劇場版3-Sync製作委員会</dd></div>
             <div class="credit-row"><dt>Music</dt><dd>3-Sync / Guest Artists</dd></div>
             <div class="credit-row"><dt>Event Type</dt><dd>Music Cinematic Project</dd></div>
             <div class="credit-row"><dt>Notice</dt><dd>掲載内容は制作中のため、予告なく変更される場合があります。</dd></div>
@@ -2156,24 +2179,28 @@
             <iframe class="guest-modal-video" id="guestModalVideo" title="参加作品動画" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" hidden></iframe>
             <span class="guest-video-pending" id="guestVideoPending">VIDEO COMING SOON</span>
           </div>
+        </div>
+        <div class="guest-reading-toolbar">
           <div class="guest-media-controls">
             <button class="guest-audio-button" id="guestAudioButton" type="button" disabled>
               <span class="guest-audio-icon" aria-hidden="true">♪</span>
               <span id="guestAudioButtonLabel">音源のみ再生</span>
             </button>
             <audio id="guestAudioPlayer" preload="metadata"></audio>
+            <button class="guest-audio-button" id="guestVideoPause" type="button" hidden>動画を一時停止</button>
             <span class="guest-media-help">曲を流したまま、物語・設定・リンク集を開けます。</span>
           </div>
-        </div>
         <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
           <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="links">リンク集</button>
         </div>
+        </div>
         <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
           <div class="guest-content-grid">
             <figure class="guest-content-visual">
               <img class="guest-content-image" id="guestContentImage" src="" alt="">
+              <button class="guest-image-expand" type="button" aria-label="作品画像を拡大">画像を拡大</button>
               <span class="guest-content-image-pending" id="guestContentImagePending">IMAGE COMING SOON</span>
             </figure>
             <div class="guest-content-reader">
@@ -2188,12 +2215,38 @@
     </section>
   </div>
 
+  <dialog class="guest-image-dialog" id="guestImageDialog" aria-label="作品画像の拡大表示">
+    <button type="button" aria-label="画像を閉じる">×</button>
+    <img alt="">
+  </dialog>
   <footer class="footer">
     <img class="footer-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync" />
     <p>© 3-Sync<br>Guest characters and works © their respective creators.</p>
   </footer>
 
+  <script src="illustrations/slides.js"></script>
   <script>
+    (() => {
+      const slides = window.illustrationSlides || ['illustrations/hero_theatrical_visual.jpg', 'illustrations/character_key_visual_poster.jpg'];
+      if (!slides.length) return;
+      const img = document.querySelector('#illustrationSlide');
+      const count = document.querySelector('#illustrationCount');
+      const pause = document.querySelector('#illustrationPause');
+      let index = 0;
+      let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const render = () => {
+        img.src = slides[index]; img.alt = `3-Sync イラスト ${index + 1}`;
+        count.textContent = `${index + 1} / ${slides.length}`;
+        pause.textContent = paused ? '自動再生' : '一時停止';
+        pause.setAttribute('aria-pressed', String(paused));
+      };
+      const step = delta => { index = (index + delta + slides.length) % slides.length; render(); };
+      document.querySelector('#illustrationPrev').onclick = () => step(-1);
+      document.querySelector('#illustrationNext').onclick = () => step(1);
+      pause.onclick = () => { paused = !paused; render(); };
+      setInterval(() => { if (!paused && !document.hidden && slides.length > 1) step(1); }, 5000);
+      render();
+    })();
     const menuButton = document.querySelector('.menu-button');
     const navLinks = document.querySelector('#navLinks');
 
@@ -2215,10 +2268,10 @@
         video: "https://youtu.be/zMjVDDwyeEU?si=XdBqDaTLTwqxalrQ",
         story: "3sync_assets/luarie_story.html",
         storyExternal: "https://note.com/luarie_takamiya/n/n60a44afb0e20",
-        storyImage: "3sync_assets/member_luarie.png",
+        storyImage: "icons/member_luarie.png",
         setting: "3sync_assets/luarie_setting.html",
         settingExternal: "https://note.com/luarie_takamiya/n/n792ef57858f1",
-        settingImage: "3sync_assets/member_luarie.png"
+        settingImage: "icons/member_luarie.png"
       }
       /*
         "01": {
@@ -2259,6 +2312,34 @@
     const guestModalExternal = document.querySelector('#guestModalExternal');
     const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
     const guestCards = [...document.querySelectorAll('.guest-card')];
+    const imageDialog = document.querySelector('#guestImageDialog');
+    const videoPauseButton = document.querySelector('#guestVideoPause');
+    videoPauseButton.addEventListener('click', pauseGuestVideo);
+    document.querySelector('.guest-image-expand').addEventListener('click', () => {
+      if (guestContentImage.hidden) return;
+      const image = imageDialog.querySelector('img');
+      image.src = guestContentImage.src;
+      image.alt = guestContentImage.alt;
+      imageDialog.showModal();
+    });
+    imageDialog.querySelector('button').addEventListener('click', () => imageDialog.close());
+    imageDialog.addEventListener('click', event => { if (event.target === imageDialog) imageDialog.close(); });
+    let readerResizeObserver;
+    guestModalFrame.addEventListener('load', () => {
+      readerResizeObserver?.disconnect();
+      if (!guestModalFrame.classList.contains('is-reader')) {
+        guestModalFrame.style.removeProperty('height');
+        return;
+      }
+      try {
+        const article = guestModalFrame.contentDocument?.querySelector('.article');
+        if (!article) return;
+        const resize = () => { guestModalFrame.style.height = Math.ceil(article.getBoundingClientRect().height + 2) + 'px'; };
+        readerResizeObserver = new ResizeObserver(resize);
+        readerResizeObserver.observe(article);
+        resize();
+      } catch (_) { /* External pages retain their own scrolling. */ }
+    });
     let activeGuestNumber = '';
     let activeGuestFallbackImage = '';
     let lastGuestTrigger = null;
@@ -2434,6 +2515,7 @@
       guestModalVideo.src = videoUrl || 'about:blank';
       guestModalVideo.title = `${name} 動画`;
       guestModalVideo.hidden = !videoUrl;
+      videoPauseButton.hidden = !videoUrl;
       guestVideoPending.hidden = Boolean(videoUrl);
 
       if (videoUrl) {
@@ -2552,6 +2634,7 @@
     });
 
     document.addEventListener('keydown', (event) => {
+      if (imageDialog.open) return;
       if (guestModal.hidden) return;
       if (event.key === 'Escape') closeGuestModal();
       if (event.key === 'Tab') {

@@ -1841,11 +1841,13 @@
     .guest-modal-inner { padding-top: 0; }
     .guest-modal-header { padding-top: clamp(22px,4vw,48px); }
     .guest-reading-toolbar {
-      position: sticky;
-      top: 0;
+      position: relative;
+      top: auto;
       z-index: 5;
       width: 100%;
       margin: 0;
+      transform: translateY(var(--guest-toolbar-scroll, 0px));
+      will-change: transform;
       padding: 10px clamp(62px,5vw,72px) 10px clamp(22px,4vw,48px);
       border-bottom: 1px solid rgba(255,255,255,.14);
       background: rgba(5,6,18,.97);
@@ -2336,6 +2338,7 @@
 
     const guestModal = document.querySelector('#guestModal');
     const guestModalDialog = guestModal.querySelector('.guest-modal-dialog');
+    const guestReadingToolbar = guestModal.querySelector('.guest-reading-toolbar');
     const guestModalTitle = document.querySelector('#guestModalTitle');
     const guestModalLabel = document.querySelector('#guestModalLabel');
     const guestModalPoster = document.querySelector('#guestModalPoster');
@@ -2354,6 +2357,15 @@
     const guestModalTabs = [...guestModal.querySelectorAll('[data-guest-panel]')];
     const guestCards = [...document.querySelectorAll('.guest-card')];
     const imageDialog = document.querySelector('#guestImageDialog');
+    let guestToolbarFrame = 0;
+    function syncGuestToolbarPosition() {
+      if (guestToolbarFrame) return;
+      guestToolbarFrame = requestAnimationFrame(() => {
+        guestToolbarFrame = 0;
+        guestReadingToolbar.style.setProperty('--guest-toolbar-scroll', `${guestModalDialog.scrollTop}px`);
+      });
+    }
+    guestModalDialog.addEventListener('scroll', syncGuestToolbarPosition, { passive: true });
     document.querySelector('.guest-image-expand').addEventListener('click', () => {
       if (guestContentImage.hidden) return;
       const image = imageDialog.querySelector('img');
@@ -2640,6 +2652,8 @@
 
       resetGuestPanel();
       configureGuestMedia(guestMedia[activeGuestNumber] || {}, name);
+      guestModalDialog.scrollTop = 0;
+      guestReadingToolbar.style.setProperty('--guest-toolbar-scroll', '0px');
       window.clearTimeout(guestCloseTimer);
       guestModal.hidden = false;
       document.body.classList.add('modal-open');

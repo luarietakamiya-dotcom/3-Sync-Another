@@ -1533,13 +1533,13 @@
     }
     .guest-modal.is-open .guest-modal-dialog { transform: translateY(0) scale(1); }
     .guest-modal-close {
-      position: sticky;
-      z-index: 6;
-      top: 14px;
-      float: right;
+      position: absolute;
+      z-index: 7;
+      top: 12px;
+      right: 14px;
       width: 44px;
       height: 44px;
-      margin: 14px 14px -58px 0;
+      margin: 0;
       border: 1px solid rgba(255,255,255,.22);
       border-radius: 50%;
       color: #fff;
@@ -2187,7 +2187,21 @@
   <div class="guest-modal" id="guestModal" hidden>
     <div class="guest-modal-backdrop" data-guest-modal-close></div>
     <section class="guest-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="guestModalTitle">
-      <button class="guest-modal-close" type="button" aria-label="閉じる" data-guest-modal-close>×</button>
+      <div class="guest-reading-toolbar">
+        <button class="guest-modal-close" type="button" aria-label="閉じる" data-guest-modal-close>×</button>
+          <div class="guest-media-controls">
+            <button class="guest-audio-button" id="guestVideoToggle" type="button" aria-pressed="false" disabled>
+              <span class="guest-audio-icon" id="guestVideoToggleIcon" aria-hidden="true">▶</span>
+              <span id="guestVideoToggleLabel">YouTubeを再生</span>
+            </button>
+            <span class="guest-media-help">YouTubeをループ再生しながら、物語・設定・リンク集を開けます。</span>
+          </div>
+        <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
+          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="links">リンク集</button>
+        </div>
+      </div>
       <div class="guest-modal-inner">
         <header class="guest-modal-header">
           <span class="guest-modal-label" id="guestModalLabel">GUEST STORY</span>
@@ -2201,20 +2215,6 @@
           </div>
         </div>
       </div>
-        <div class="guest-reading-toolbar">
-          <div class="guest-media-controls">
-            <button class="guest-audio-button" id="guestVideoToggle" type="button" aria-pressed="false" disabled>
-              <span class="guest-audio-icon" id="guestVideoToggleIcon" aria-hidden="true">▶</span>
-              <span id="guestVideoToggleLabel">YouTubeを再生</span>
-            </button>
-            <span class="guest-media-help">YouTubeをループ再生しながら、物語・設定・リンク集を開けます。</span>
-          </div>
-        <div class="guest-modal-tabs" role="tablist" aria-label="参加作品メニュー">
-          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="story">ストーリー</button>
-          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="setting">設定</button>
-          <button class="guest-modal-tab" type="button" role="tab" aria-selected="false" data-guest-panel="links">リンク集</button>
-        </div>
-        </div>
       <div class="guest-modal-inner guest-modal-body">
         <div class="guest-modal-content" id="guestModalContent" role="tabpanel" hidden>
           <div class="guest-content-grid">

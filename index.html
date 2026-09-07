@@ -2060,7 +2060,7 @@
         <div class="guest-grid guest-grid--sync">
           <article class="panel guest-card sync-card" data-no="LUA" data-key="sync-luarie" data-group="sync"><span class="guest-role">3-SYNC / LUA</span><div class="guest-avatar"><img src="icons/character_lua_visual.jpg" alt="ルアリエ アイコン"></div><h3 class="guest-name">ルアリエ</h3><p class="guest-track"><span>Story：</span>Another Stories</p></article>
           <article class="panel guest-card sync-card" data-no="MIMI" data-key="sync-mimi" data-group="sync"><span class="guest-role">3-SYNC / MIMI</span><div class="guest-avatar"><img src="icons/character_mimi_visual.jpg" alt="夜凪ミミ アイコン"></div><h3 class="guest-name">夜凪ミミ</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
-          <article class="panel guest-card sync-card" data-no="A" data-key="sync-achan" data-group="sync"><span class="guest-role">3-SYNC / A-CHAN</span><div class="guest-avatar"><img src="icons/character_achan_visual.jpg" alt="えーちゃん アイコン"></div><h3 class="guest-name">えーちゃん</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
+          <article class="panel guest-card sync-card" data-no="A" data-key="sync-achan" data-group="sync"><span class="guest-role">3-SYNC / A-CHAN</span><div class="guest-avatar"><img src="icons/character_achan_visual.jpg" alt="HappyTune -詠唱堂- アイコン"></div><h3 class="guest-name">HappyTune -詠唱堂-</h3><p class="guest-track"><span>Story：</span>Coming Soon</p></article>
         </div>
         <div class="section-head">
           <div>
@@ -2250,24 +2250,27 @@
 
   <script src="illustrations/slides.js"></script>
   <script>
+    const githubFolderFiles = (folder) => fetch(`https://api.github.com/repos/luarietakamiya-dotcom/3-Sync-Another/contents/${folder}`, {
+      headers: { Accept: 'application/vnd.github+json' }
+    }).then((response) => response.ok ? response.json() : Promise.reject(new Error(`${folder}: ${response.status}`)));
+    const illustrationFilesPromise = githubFolderFiles('illustrations').catch((error) => {
+      console.info('GitHubのイラスト一覧を取得できませんでした。', error);
+      return [];
+    });
+    const iconFilesPromise = githubFolderFiles('icons').catch((error) => {
+      console.info('GitHubのアイコン一覧を取得できませんでした。', error);
+      return [];
+    });
+
     (async () => {
       const fallbackSlides = window.illustrationSlides || ['illustrations/hero_theatrical_visual.jpg', 'illustrations/character_key_visual_poster.jpg'];
       let slides = [...fallbackSlides];
-      try {
-        const response = await fetch('https://api.github.com/repos/luarietakamiya-dotcom/3-Sync-Another/contents/illustrations', {
-          headers: { Accept: 'application/vnd.github+json' }
-        });
-        if (response.ok) {
-          const files = await response.json();
-          const liveSlides = files
-            .filter((file) => file.type === 'file' && /\.(?:jpe?g|png|webp|gif|avif)$/i.test(file.name) && file.download_url)
-            .sort((a, b) => a.name.localeCompare(b.name, 'ja', { numeric: true }))
-            .map((file) => file.download_url);
-          if (liveSlides.length) slides = liveSlides;
-        }
-      } catch (error) {
-        console.info('GitHubのイラスト一覧を取得できないため、同梱一覧を使用します。', error);
-      }
+      const files = await illustrationFilesPromise;
+      const liveSlides = files
+        .filter((file) => file.type === 'file' && /\.(?:jpe?g|png|webp|gif|avif)$/i.test(file.name) && file.download_url)
+        .sort((a, b) => a.name.localeCompare(b.name, 'ja', { numeric: true }))
+        .map((file) => file.download_url);
+      if (liveSlides.length) slides = liveSlides;
       if (!slides.length) return;
       const img = document.querySelector('#illustrationSlide');
       const count = document.querySelector('#illustrationCount');
@@ -2313,6 +2316,14 @@
         settingExternal: "https://note.com/luarie_takamiya/n/n792ef57858f1",
         settingImage: "icons/member_luarie.png"
       },
+      "sync-achan": {
+        videoPoster: "illustrations/sync_achan_poster.jpg",
+        storyImage: "illustrations/sync_achan_content.png",
+        settingImage: "illustrations/sync_achan_content.png",
+        links: {
+          x: "https://x.com/AI_Show_Do"
+        }
+      },
       // FORM PARTICIPANTS START
       "01": {"story": "content/guest_01_story.html", "setting": "content/guest_01_setting.html", "links": {"x": "https://x.com/Catbeat5656", "homepage": "https://catbeat-official.netlify.app/"}},
       "02": {"story": "content/guest_02_story.html", "setting": "content/guest_02_setting.html", "links": {"x": "https://x.com/daitenP", "homepage": "https://www.mild-champagne-poisoning.site/"}},
@@ -2353,6 +2364,24 @@
         }
       */
     };
+
+    const participantMediaReady = Promise.all([illustrationFilesPromise, iconFilesPromise]).then(([illustrations, icons]) => {
+      const fieldNames = { poster: 'videoPoster', story: 'storyImage', setting: 'settingImage' };
+      illustrations.forEach((file) => {
+        const match = file.name.match(/^guest[_-](\d{1,2})[_-](poster|story|setting)\.(?:jpe?g|png|webp|gif|avif)$/i);
+        if (!match || !file.download_url) return;
+        const key = match[1].padStart(2, '0');
+        guestMedia[key] ||= {};
+        guestMedia[key][fieldNames[match[2].toLowerCase()]] = file.download_url;
+      });
+      icons.forEach((file) => {
+        const match = file.name.match(/^guest[_-](\d{1,2})[_-]icon\.(?:jpe?g|png|webp|gif|avif)$/i);
+        if (!match || !file.download_url) return;
+        const key = match[1].padStart(2, '0');
+        const image = document.querySelector(`.guest-card[data-no="${key}"] .guest-avatar img`);
+        if (image) image.src = file.download_url;
+      });
+    });
 
     const guestModal = document.querySelector('#guestModal');
     const guestModalDialog = guestModal.querySelector('.guest-modal-dialog');
@@ -2652,7 +2681,8 @@
 
     }
 
-    function openGuestModal(card) {
+    async function openGuestModal(card) {
+      await participantMediaReady;
       const name = card.querySelector('.guest-name')?.textContent.trim() || 'Guest Artist';
       const image = card.querySelector('.guest-avatar img');
       activeGuestNumber = card.dataset.key || card.dataset.no || '';

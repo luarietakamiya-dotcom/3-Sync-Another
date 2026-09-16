@@ -181,7 +181,7 @@ setTimeout(() => {
       const candidates = [...frame.contentDocument.querySelectorAll('p')]
         .map((p) => p.textContent.replace(/\s+/g, ' ').trim())
         .filter((text) => text.length >= 24);
-      if (candidates[0]) introBox.textContent = candidates[0].slice(0, 220);
+      if (candidates[0]) introBox.textContent = candidates[0];
     } catch (_) {
       // Cross-origin pages keep the fallback introduction.
     }

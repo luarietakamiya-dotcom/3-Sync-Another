@@ -1,5 +1,19 @@
 window.illustrationSlides = ["illustrations/character_achan_visual.jpg", "illustrations/character_key_visual_poster.jpg", "illustrations/character_lua_visual.jpg", "illustrations/character_mimi_visual.jpg", "illustrations/guest_03_katsunn_main.jpg", "illustrations/guest_06_mogu_main.png", "illustrations/guest_10_to_main.png", "illustrations/guest_11_uta_journey_main.png", "illustrations/guest_12_new_world_main.png", "illustrations/guest_13_aki_main.png", "illustrations/guest_14_gin_main.jpg", "illustrations/guest_15_blanchesca_main.png", "illustrations/guest_16_maeno_main.png", "illustrations/guest_18_memuroiro_main.png", "illustrations/hero_theatrical_visual.jpg", "illustrations/sync_achan_content.png", "illustrations/sync_achan_poster.jpg"];
 
+// Mobile safeguard for very tall reveal sections.
+// On narrow screens the guest section becomes one long column, so a 14%
+// IntersectionObserver threshold can never be reached and the whole section
+// remains opacity: 0. Force reveal sections visible on phones.
+const revealMobileSections = () => {
+  if (!window.matchMedia('(max-width: 760px)').matches) return;
+  document.querySelectorAll('.reveal').forEach((element) => {
+    element.classList.add('is-visible');
+  });
+};
+
+document.addEventListener('DOMContentLoaded', revealMobileSections);
+window.addEventListener('resize', revealMobileSections, { passive: true });
+
 // Official links for the 3-Sync member cards.
 // index.html defines guestMedia after this file is loaded, so apply the links
 // on the next task after the inline script has finished initializing.

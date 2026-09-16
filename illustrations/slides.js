@@ -132,6 +132,34 @@ setTimeout(() => {
     tiktok: 'TikTok'
   };
 
+  // Hand-tuned introductions. Story files use very different structures
+  // (single long paragraph, many short paragraphs, novels, and screenplays),
+  // so automatic first-paragraph extraction is intentionally avoided.
+  const guestIntroductions = {
+    'sync-luarie': '仲間たちの「嘘」によって、ただ一人だけ生還したルミナ。喪失と復讐を抱え、新御霊市で3-Syncと出会う。彼女が探し続けた未来と、ひとりぼっちの戦いの行方を描く。',
+    'sync-mimi': '夜凪ミミの物語は現在準備中です。公開までお待ちください。',
+    'sync-achan': 'HappyTune -詠唱堂-／えーちゃんの物語は現在準備中です。公開までお待ちください。',
+    '01': 'かつて4-Syncと共にいたはずの「存在しない4人目」。世界から記録も記憶も消された彼女が3-Syncと再会し、失われた記憶と存在を取り戻すため、世界そのもののノイズに立ち向かう。',
+    '02': 'ライブ帰り、ヨーグルトをめぐる思わぬ争いが勃発。買い占めと逆恨みから始まった騒動は、アイ〇ンマンに似た世界を巻き込む妙な戦いへ発展していく。',
+    '03': 'レトロゲームを始めた瞬間、ゲーム世界へ転生してしまった3-Sync。猫乙女の二人とともに、終わりのないゲームから脱出するための旅が始まる。',
+    '04': '「断絶」によって共鳴を失った世界。HT、Mimi、Luarie、Paulaは導かれるように出会い、すべての共鳴を断ち切ろうとするNULLに抗いながら、失われたつながりを取り戻していく。',
+    '05': '決戦前夜のような緊張の中、MakotoAIが挑むのは未知なる「巨大な試練」。その先に待つものとは――。',
+    '06': '40年前、永遠を望んだ吸血鬼Noirと、それを選ばなかった人間の恋人。閉鎖されたクラブで3-Syncとともに過去の残響へ触れたNoirは、失った相手の選択と向き合い、最後のダンスを踊る。',
+    '07': '人間の恐怖と闇から生まれ、現代のデジタル空間で再び目覚めた「nue」。人を憎むために生まれた怪異は、3-Syncとの時間の中で人間の優しさを知り、自らの役目と心の間で揺れ始める。',
+    '08': '自分を知っている3-Syncと出会ったNERA。身に覚えのない記憶に翻弄されながら、それが誰のものなのか、そして記憶の奥に隠された真実へ近づいていく。',
+    '09': '「劇場版3-Sync - LOST DIMENSION」の詳細ストーリーは現在準備中です。公開までお待ちください。',
+    '10': 'DIVARIASのワールドツアーに当選したものの、金欠で諦めかけたルアリエ。失意の中で本人・クロと偶然出会い、思いがけない二人の世界旅行が始まる。',
+    '11': '記憶を失くしたはつえがたどる、初恋の手掛かり。音楽やDJを始めた背景と、失われた記憶につながる想いを描く。',
+    '12': '酸性雨の新御霊市で限界へ追い込まれた3姉妹を、遥かな宇宙から見守るNW-la。最後の一口のヨーグルトと諦めない心に、星を越えて届けられた歌と粒子が共鳴する。',
+    '13': '人間の感情が流れ着き、妖怪として形を得る「異界」。そこへ侵入したノイズに対抗できず、座敷童子は古いブラウン管テレビを介して現世の3-Syncへ救難信号を送る。',
+    '14': '平行世界の歴史を観察・記録する「記録人」の紬。世界軸ジャンプ中の事故で新御霊市へ強制着地し、えーちゃんたち3-Syncと出会うことで、予定外の世界での滞在が始まる。',
+    '15': '新御霊市の下層区域で起きた異常なノイズ反応。調査へ向かった3-Syncは、街の影で活動する謎の女性ブランシェスカと遭遇し、彼女の閉ざされた過去へつながる異変に巻き込まれていく。',
+    '16': '世界各地を灰へ変える、説明不能の大火災。その中心にいる少女アッシュは、世界そのものの絶望から生まれた存在だった。破壊を使命とする彼女によって、文明を終わらせる炎が広がっていく。',
+    '17': '「劇場版3-Sync」完成試写会を楽しむ3人の背後に、頭部がカメラの謎の集団が出現。映画泥棒を注意した3-Syncに光る剣が向けられ、そこへ別の目的で盗撮していた南黒山ソイヤが現れる。',
+    '18': '倒されたノイズたちが堕ちる「電子地獄」。そこで獄卒として働く喜多白メムは、牛頭ロリと馬頭ガキの二つの姿を使い分け、暴走して怪物化した「廃鬼」から地獄の秩序を取り戻すため動き出す。',
+    '19': '人間だった誰かの記憶と後悔を核に生まれたノイズ・九十九灯。ノイズを守ろうとする彼女と出会った3-Syncは、その矛盾した心に触れ、都市を覆う「巨大な悲しみの塊」との戦いへ向かう。'
+  };
+
   let activeCard = null;
 
   const findActiveCard = () => {
@@ -166,28 +194,13 @@ setTimeout(() => {
       linksBox.appendChild(empty);
     }
 
-    introBox.textContent = track
-      ? `「${track}」へつながる Another Story。`
-      : 'この作品の Another Story を紹介します。';
+    introBox.textContent = guestIntroductions[key]
+      || (track ? `「${track}」へつながる Another Story。` : 'この作品の Another Story を紹介します。');
     trackBox.textContent = track ? `TITLE / ${track}` : '';
 
     // Story is the only reading panel in the new layout.
     storyTab.click();
   };
-
-  const updateIntroFromStory = () => {
-    try {
-      if (!activeCard || frame.hidden || !frame.contentDocument) return;
-      const candidates = [...frame.contentDocument.querySelectorAll('p')]
-        .map((p) => p.textContent.replace(/\s+/g, ' ').trim())
-        .filter((text) => text.length >= 24);
-      if (candidates[0]) introBox.textContent = candidates[0];
-    } catch (_) {
-      // Cross-origin pages keep the fallback introduction.
-    }
-  };
-
-  frame.addEventListener('load', () => window.setTimeout(updateIntroFromStory, 80));
 
   const observer = new MutationObserver(() => {
     if (!modal.hidden && modal.classList.contains('is-open')) {

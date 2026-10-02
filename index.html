@@ -933,6 +933,43 @@
       font-size: 12px;
     }
 
+    #schedule .schedule-line--premiere {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .schedule-item--premiere {
+      padding: clamp(24px, 4vw, 48px);
+    }
+
+    .schedule-item--premiere time {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 12px 32px;
+      font-size: clamp(30px, 5.5vw, 64px);
+      line-height: 1.25;
+      letter-spacing: 0.03em;
+      margin-bottom: 20px;
+    }
+
+    .schedule-item--premiere time span {
+      white-space: nowrap;
+    }
+
+    .schedule-item--premiere time small {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+
+    .schedule-item--premiere h3 {
+      font-size: clamp(20px, 2.8vw, 30px);
+    }
+
+    .schedule-item--premiere p {
+      font-size: 15px;
+    }
+
     .credit-grid {
       display: grid;
       grid-template-columns: 0.8fr 1.2fr;
@@ -2150,11 +2187,12 @@
           </div>
           <p class="section-lead">物語が幕を開けるその日まで、最新情報を順次お届けします。</p>
         </div>
-        <div class="schedule-line">
-          <article class="panel schedule-item"><time>COMING SOON</time><h3>Teaser</h3><p>キービジュアル、告知映像などを公開予定。</p></article>
-          <article class="panel schedule-item"><time>COMING SOON</time><h3>Guest Reveal</h3><p>ゲストアーティスト情報を順次解禁。</p></article>
-          <article class="panel schedule-item"><time>2026.10.01</time><h3>Countdown</h3><p>公開直前カウントダウン企画を開始予定。</p></article>
-          <article class="panel schedule-item"><time>2026.10.10</time><h3>Premiere</h3><p>劇場版3-Sync -Another Stories- 公開。</p></article>
+        <div class="schedule-line schedule-line--premiere">
+          <article class="panel schedule-item schedule-item--premiere">
+            <time datetime="2026-10-10T20:30:00+09:00"><span>2026.10.10</span><span>20:30〜 <small>日本時間</small></span></time>
+            <h3>YouTubeプレミア公開</h3>
+            <p>劇場版3-Sync -Another Stories-</p>
+          </article>
         </div>
       </div>
     </section>
@@ -2181,7 +2219,7 @@
             <div class="credit-row"><dt>Planning</dt><dd>劇場版3-Sync製作委員会</dd></div>
             <div class="credit-row"><dt>Music</dt><dd>3-Sync / Guest Artists</dd></div>
             <div class="credit-row"><dt>Event Type</dt><dd>Music Cinematic Project</dd></div>
-            <div class="credit-row"><dt>Notice</dt><dd>掲載内容は制作中のため、予告なく変更される場合があります。</dd></div>
+            <div class="credit-row"><dt>Notice</dt><dd>最新情報は本サイトで随時お知らせします。</dd></div>
           </dl>
         </div>
       </div>

@@ -1924,6 +1924,19 @@
     .illustration-controls { display: flex; justify-content: center; align-items: center; gap: 16px; padding: 8px; }
     .illustration-controls button { min-width: 44px; min-height: 44px; color: white; background: #20263e; border: 1px solid #566080; border-radius: 8px; cursor: pointer; }
     @media (max-width: 640px) { .illustration-stage { min-height: 260px; } }
+
+    /* Event archive */
+    .archive-player { overflow: hidden; padding: 8px; }
+    .archive-video { aspect-ratio: 16 / 9; background: #050611; border-radius: 10px; overflow: hidden; }
+    .archive-video iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .archive-caption { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding: clamp(18px, 3vw, 32px); }
+    .archive-caption > div { min-width: 0; }
+    .archive-caption h3 { font-size: clamp(18px, 2vw, 24px); overflow-wrap: anywhere; }
+    .archive-caption .section-kicker { margin-bottom: 8px; }
+    .archive-caption .button { text-align: center; letter-spacing: .04em; }
+    @media (max-width: 640px) {
+      .archive-caption .button { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -1937,7 +1950,7 @@
       </a>
       <button class="menu-button" type="button" aria-label="メニューを開く" aria-expanded="false">☰</button>
       <div class="nav-links" id="navLinks">
-        <a href="#news">News</a>
+        <a href="#archive">Archive</a>
         <a href="#intro">Introduction</a>
         <a href="#story">Story</a>
         <a href="#music">Music</a>
@@ -1962,7 +1975,7 @@
           </div>
           <div class="date-line" aria-label="公開日">
             <span>2026.10.10</span>
-            <span>PREMIERE</span>
+            <span>ARCHIVE</span>
           </div>
           <p class="hero-copy hero-copy--cinematic">
             本編では語られなかった、<br>もうひとつの物語。
@@ -1972,34 +1985,33 @@
           </div>
         </div>
         <div class="visual-card reveal" aria-label="メインキービジュアル">
-          <img src="illustrations/hero_theatrical_visual.jpg" alt="劇場版3-Sync -Another Stories- HEROキービジュアル" />
+          <img src="illustrations/hero_z.jpg" alt="劇場版3-Sync -Another Stories- 出演者集合ビジュアル" />
           <div class="visual-badge">HERO KEY VISUAL</div>
         </div>
       </div>
     </section>
 
-    <section id="news" class="reveal">
+    <section id="archive" class="reveal">
+      <span id="news" aria-hidden="true"></span>
       <div class="container">
         <div class="section-head">
           <div>
-            <span class="section-kicker">Official Information</span>
-            <h2 class="section-title">NEWS</h2>
+            <span class="section-kicker">Watch Again</span>
+            <h2 class="section-title">ARCHIVE</h2>
           </div>
-          <p class="section-lead">公開までの更新情報を掲載します。ティザー、参加アーティスト、楽曲情報は順次解禁予定です。</p>
+          <p class="section-lead">皆さま、ご視聴ありがとうございました。劇場版3-Sync -Another Stories- をアーカイブでお楽しみください。</p>
         </div>
-        <div class="panel news-list">
-          <article class="news-item">
-            <time class="news-date" datetime="2026-10-10">2026.10.10</time>
-            <p class="news-text">『劇場版3-Sync -Another Stories-』公開。</p>
-          </article>
-          <article class="news-item">
-            <time class="news-date" datetime="2026-09-02">2026.09.02</time>
-            <p class="news-text">参加アーティスト19組を発表。公式サイトを更新しました。</p>
-          </article>
-          <article class="news-item">
-            <time class="news-date" datetime="2026-09-01">2026.09.01</time>
-            <p class="news-text">公開に向けた最新情報の発信を開始しました。</p>
-          </article>
+        <div class="panel archive-player">
+          <div class="archive-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/-PxF2hTE3C0?rel=0" title="劇場版3-Sync -Another Stories- アーカイブ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="archive-caption">
+            <div>
+              <p class="section-kicker">2026.10.10</p>
+              <h3>劇場版3-Sync -Another Stories-</h3>
+            </div>
+            <a class="button primary" href="https://youtu.be/-PxF2hTE3C0?si=winGyarUTn-Wo7rV" target="_blank" rel="noopener noreferrer">YouTubeでアーカイブを見る ↗</a>
+          </div>
         </div>
       </div>
     </section>

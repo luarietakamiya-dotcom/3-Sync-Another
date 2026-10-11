@@ -1946,6 +1946,20 @@
     @media (max-width: 640px) {
       .archive-caption .button { width: 100%; }
     }
+
+    .archive-chapters { margin: 0 clamp(18px, 3vw, 32px); border-top: 1px solid var(--line); padding: 22px 0; }
+    .archive-chapters summary { cursor: pointer; font-weight: 800; padding: 8px 0; }
+    .archive-chapter-help { color: var(--muted); font-size: 13px; margin-top: 10px; }
+    .archive-chapter-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; padding: 0; margin: 18px 0 0; }
+    .archive-chapter-list a { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: start; gap: 12px; padding: 14px 12px; min-height: 48px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.035); font-size: 13px; line-height: 1.65; overflow-wrap: anywhere; }
+    .archive-chapter-time { color: var(--sub); font-family: ui-monospace, monospace; white-space: nowrap; }
+    .archive-chapter-list a:hover, .archive-chapter-list a[aria-current="true"] { border-color: var(--sub); background: rgba(0,217,255,.08); }
+    .archive-chapter-list a:focus-visible, .archive-chapters summary:focus-visible { outline: 2px solid var(--sub); outline-offset: 3px; }
+    .archive-playback-status:empty { display: none; }
+    .archive-playback-status { color: var(--muted); font-size: 13px; padding: 0 clamp(18px, 3vw, 32px) 22px; }
+    @media (max-width: 760px) {
+      .archive-chapter-list { grid-template-columns: minmax(0, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -2021,6 +2035,47 @@
             </div>
             <a class="button primary" href="https://youtu.be/-PxF2hTE3C0?si=winGyarUTn-Wo7rV" target="_blank" rel="noopener noreferrer">YouTubeでアーカイブを見る ↗</a>
           </div>
+          <details class="archive-chapters">
+            <summary>上映タイムスタンプ（全34作品）</summary>
+            <p class="archive-chapter-help">作品名を押すと、上の動画がその位置に移動します。</p>
+            <ol class="archive-chapter-list">
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=75" data-start="75" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:01:15</span><span>南黒山ソイヤ『映画館でのマナーを守ろうの巻』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=291" data-start="291" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:04:51</span><span>高宮ルアリエ『OverSync』（オープニング）</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=598" data-start="598" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:09:58</span><span>Katsunn『GAME START! 劇場版3-Sync』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=947" data-start="947" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:15:47</span><span>夜凪ミミ『city cat』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=1246" data-start="1246" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:20:46</span><span>Resonance Diva『ノイズに残る、最後の灯』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=1692" data-start="1692" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:28:12</span><span>えーちゃん『Pink Noise』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=1932" data-start="1932" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:32:12</span><span>D『ヨーグルトは争いの元』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=2227" data-start="2227" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:37:07</span><span>To『Travel With -君と世界中で歌って-』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=2667" data-start="2667" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:44:27</span><span>高宮ルアリエ『ひとりぼっちのレギオン』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=3144" data-start="3144" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:52:24</span><span>銀-GIN-『時を紡ぐピアス』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=3504" data-start="3504" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">0:58:24</span><span>夜凪ミミ『INTERFACE GIRLS』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=4034" data-start="4034" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:07:14</span><span>Uta-Journey『Happy True Empathy』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=4410" data-start="4410" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:13:30</span><span>えーちゃん『One Decibel』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=4919" data-start="4919" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:21:59</span><span>MOGU『Beat, No Heart ― 脈なき聖遺物』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=5219" data-start="5219" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:26:59</span><span>MakotoAI『デリシャス・レゾナンス』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=5553" data-start="5553" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:32:33</span><span>夜凪ミミ『FLY DOWN』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=5830" data-start="5830" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:37:10</span><span>Ruke『LOST DIMENSION』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=6157" data-start="6157" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:42:37</span><span>∫varts『境界共鳴 - BOUNDARY SYNC -』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=6542" data-start="6542" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:49:02</span><span>高宮ルアリエ『RE:ひとりぼっちのレギオン』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=6855" data-start="6855" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:54:15</span><span>メムロイロ『ごずめずッ！獄卒ビートで刻んであげる♪』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=7089" data-start="7089" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">1:58:09</span><span>NUE//VOID『夜に哭く歌』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=7459" data-start="7459" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:04:19</span><span>えーちゃん『Splash!』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=7946" data-start="7946" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:12:26</span><span>アキ『百八鬼夜行』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=8390" data-start="8390" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:19:50</span><span>新しい世界 - NEW WORLD『星を越えた和音（オブリガート）』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=8687" data-start="8687" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:24:47</span><span>夜凪ミミ『ALL STOPS OUT』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=9020" data-start="9020" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:30:20</span><span>前野凌『Downfall into Ashes &quot;灰燼へと堕ちる世界&quot;』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=9374" data-start="9374" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:36:14</span><span>えーちゃん『シスターズとどんなドアでも』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=9605" data-start="9605" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:40:05</span><span>ブランシェスカ『黒影のレゾナンス』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=9960" data-start="9960" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:46:00</span><span>高宮ルアリエ『旧御霊市歌唱調律』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=10271" data-start="10271" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:51:11</span><span>Makotang『The world lives inside us』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=10601" data-start="10601" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">2:56:41</span><span>GABu『RE:MEMORY 4人目の欠番』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=10949" data-start="10949" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">3:02:29</span><span>夜凪ミミ『酩酊』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=11256" data-start="11256" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">3:07:36</span><span>えーちゃん『True Pain』</span></a></li>
+              <li><a href="https://youtu.be/-PxF2hTE3C0?t=11537" data-start="11537" target="_blank" rel="noopener noreferrer"><span class="archive-chapter-time">3:12:17</span><span>高宮ルアリエ『星の祈り、風の記憶』（エンディング）</span></a></li>
+            </ol>
+          </details>
+          <p class="archive-playback-status" role="status" aria-live="polite"></p>
         </div>
       </div>
     </section>
@@ -2940,6 +2995,30 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
     draw();
+  </script>
+  <script>
+    (() => {
+      const list = document.querySelector('.archive-chapter-list');
+      const frame = document.querySelector('.archive-video iframe');
+      const status = document.querySelector('.archive-playback-status');
+      if (!list || !frame) return;
+      list.addEventListener('click', (event) => {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        const link = event.target.closest('a[data-start]');
+        if (!link || !list.contains(link)) return;
+        const start = Number(link.dataset.start);
+        if (!Number.isSafeInteger(start) || start < 0) return;
+        event.preventDefault();
+        const url = new URL(frame.src);
+        url.searchParams.set('start', String(start));
+        url.searchParams.set('autoplay', '1');
+        frame.src = url.toString();
+        list.querySelectorAll('a[data-start]').forEach(item => item.removeAttribute('aria-current'));
+        link.setAttribute('aria-current', 'true');
+        if (status) status.textContent = '再生位置：' + link.textContent.replace(/\s+/g, ' ').trim();
+        frame.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+      });
+    })();
   </script>
 </body>
 </html>

@@ -1960,6 +1960,12 @@
     @media (max-width: 760px) {
       .archive-chapter-list { grid-template-columns: minmax(0, 1fr); }
     }
+
+    .site-access-counter { display: flex; flex-direction: column; align-items: center; gap: 10px; width: fit-content; max-width: 100%; margin: 26px auto 0; padding: 18px 24px; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(135deg, rgba(0,217,255,.06), rgba(123,92,255,.08)); }
+    .access-counter-label { color: var(--sub); font-size: 10px; font-weight: 900; letter-spacing: .18em; }
+    .site-access-counter img { display: block; max-width: 100%; }
+    .site-access-counter img[hidden] { display: none; }
+    .access-counter-note { color: var(--muted); font-size: 10px; letter-spacing: .05em; }
   </style>
 </head>
 <body>
@@ -2356,6 +2362,13 @@
   <footer class="footer">
     <img class="footer-logo-image" src="3sync_assets/3sync_logo.png" alt="3-Sync" />
     <p>© 3-Sync<br>Guest characters and works © their respective creators.</p>
+    <div id="access-count" class="site-access-counter" aria-label="累計アクセスカウンター">
+      <span class="access-counter-label">ACCESS COUNTER</span>
+      <img id="accessCounter" data-counter-src="https://hits.sh/luarietakamiya-dotcom.github.io/3-Sync-Another.svg?label=TOTAL&amp;color=00d9ff&amp;labelColor=111827&amp;style=for-the-badge" alt="累計アクセス数" height="28" referrerpolicy="no-referrer" hidden>
+      <p id="accessCounterStatus" role="status">読み込み中…</p>
+      <noscript><img src="https://hits.sh/luarietakamiya-dotcom.github.io/3-Sync-Another.svg?label=TOTAL&amp;color=00d9ff&amp;labelColor=111827&amp;style=for-the-badge" alt="累計アクセス数" height="28" referrerpolicy="no-referrer"></noscript>
+      <p class="access-counter-note">2026.10.12から集計</p>
+    </div>
   </footer>
 
   <script src="illustrations/slides.js"></script>
@@ -3023,6 +3036,25 @@
         if (status) status.textContent = '再生位置：' + link.textContent.replace(/\s+/g, ' ').trim();
         frame.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
       });
+    })();
+  </script>
+  <script>
+    (() => {
+      const image = document.querySelector('#accessCounter');
+      const status = document.querySelector('#accessCounterStatus');
+      if (!image || !status) return;
+      image.addEventListener('load', () => {
+        image.hidden = false;
+        status.hidden = true;
+      }, { once: true });
+      image.addEventListener('error', () => {
+        image.hidden = true;
+        status.hidden = false;
+        status.textContent = '一時的にカウンターを取得できません。';
+      }, { once: true });
+      const url = new URL(image.dataset.counterSrc);
+      url.searchParams.set('visit', Date.now().toString(36) + Math.random().toString(36).slice(2));
+      image.src = url.toString();
     })();
   </script>
 </body>
